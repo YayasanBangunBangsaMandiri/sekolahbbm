@@ -7,6 +7,8 @@ use App\Models\Gallery;
 use App\Models\Major;
 use App\Models\Post;
 use App\Models\Registration;
+use App\Models\Staff;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,35 +19,34 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // Data statistik untuk kartu ringkasan
-        $totalRegistrations = Registration::count();
+        // Hitung data untuk dashboard
         $totalPosts = Post::count();
-        $totalGalleries = Gallery::count();
+        $totalStaff = Staff::count();
+        $totalRegistrations = Registration::count();
         $totalMajors = Major::count();
+        $totalGalleries = Gallery::count();
+        $totalUsers = User::count();
         
-        // Pendaftaran terbaru
-        $latestRegistrations = Registration::with('major')
-                                ->latest()
-                                ->take(5)
-                                ->get();
-                                
-        // Postingan terbaru
-        $latestPosts = Post::with('author')
-                        ->latest()
-                        ->take(5)
-                        ->get();
-                        
-        // Statistik pendaftaran per jurusan
-        $registrationsByMajor = Registration::select('major_id', DB::raw('count(*) as count'))
-                                ->with('major')
-                                ->groupBy('major_id')
-                                ->get();
+        // Ambil data pendaftaran terbaru
+        $latestRegistrations = Registration::latest()->take(5)->get();
+        
+        // Ambil data postingan terbaru
+        $latestPosts = Post::latest()->take(5)->get();
+        
+        // Statistik pendaftaran berdasarkan jurusan
+        $registrationsByMajor = Registration::with('major')
+            ->select('major_id')
+            ->selectRaw('count(*) as count')
+            ->groupBy('major_id')
+            ->get();
         
         return view('admin.dashboard', compact(
-            'totalRegistrations',
             'totalPosts',
-            'totalGalleries',
+            'totalStaff',
+            'totalRegistrations',
             'totalMajors',
+            'totalGalleries',
+            'totalUsers',
             'latestRegistrations',
             'latestPosts',
             'registrationsByMajor'
