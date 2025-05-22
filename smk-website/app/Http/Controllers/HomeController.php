@@ -2,66 +2,146 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Major;
 use App\Models\Post;
+use App\Models\Media;
+use App\Models\Page;
+use App\Models\Program;
+use App\Models\Project;
 use App\Models\Staff;
+use App\Models\ContactSubmission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
     /**
-     * Menampilkan halaman beranda
+     * Display the homepage.
      */
     public function index()
     {
-        // Ambil berita terbaru
-        $latestPosts = Post::latest()->take(3)->get();
+        // Get featured content for homepage
+        $featuredPosts = Post::where('is_featured', true)
+            ->latest('published_at')
+            ->take(3)
+            ->get();
+            
+        // Get latest news articles if not enough featured posts
+        if ($featuredPosts->count() < 3) {
+            $additionalPosts = Post::where('is_featured', false)
+                ->latest('published_at')
+                ->take(3 - $featuredPosts->count())
+                ->get();
+            $featuredPosts = $featuredPosts->merge($additionalPosts);
+        }
         
-        // Ambil daftar jurusan
-        $majors = Major::all();
-        
-        // Ambil staff untuk highlight (misalnya kepala sekolah)
-        $featuredStaff = Staff::where('type', 'management')->first();
-        
-        return view('home', compact('latestPosts', 'majors', 'featuredStaff'));
+        // Get featured programs
+        $featuredPrograms = Program::where('is_featured', true)
+            ->orderBy('order')
+            ->take(3)
+            ->get();
+            
+        // Get featured projects
+        $featuredProjects = Project::where('is_featured', true)
+            ->latest()
+            ->take(4)
+            ->get();
+            
+        // Get promotional videos
+        $promotionalVideos = Media::where('type', 'video')
+            ->where('mediable_type', 'App\\Models\\Page')
+            ->whereHas('mediable', function($query) {
+                $query->where('slug', 'home');
+            })
+            ->orderBy('order')
+            ->take(1)
+            ->get();
+            
+        // Get featured gallery images
+        $galleryImages = Media::where('type', 'image')
+            ->where('mediable_type', 'App\\Models\\Page')
+            ->whereHas('mediable', function($query) {
+                $query->where('slug', 'home');
+            })
+            ->orderBy('order')
+            ->take(6)
+            ->get();
+            
+        // Get page content
+        $page = Page::where('slug', 'home')->first();
+            
+        return view('home', compact(
+            'featuredPosts', 
+            'featuredPrograms', 
+            'featuredProjects',
+            'promotionalVideos',
+            'galleryImages',
+            'page'
+        ));
     }
     
     /**
-     * Menampilkan halaman tentang sekolah
+     * Display the about page.
      */
     public function about()
     {
-        // Ambil data staff untuk halaman about
-        $managementStaff = Staff::where('type', 'management')->get();
+        // Get the about page content
+        $page = Page::where('slug', 'about-us')->first();
         
-        return view('about', compact('managementStaff'));
+        // Get school leadership and management team
+        $leadership = Staff::where('type', 'leadership')
+            ->orderBy('order')
+            ->get();
+            
+        // Get other staff members
+        $staff = Staff::where('type', 'staff')
+            ->orderBy('name')
+            ->get();
+            
+        return view('about', compact('page', 'leadership', 'staff'));
     }
     
     /**
-     * Menampilkan halaman kontak
+     * Display the contact page.
      */
     public function contact()
     {
-        return view('contact');
+        // Get the contact page content
+        $page = Page::where('slug', 'contact')->first();
+        
+        return view('contact', compact('page'));
     }
     
     /**
-     * Mengirim pesan dari form kontak
+     * Handle the contact form submission.
      */
     public function sendContact(Request $request)
     {
-        // Validasi input
+        // Validate input
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:20',
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
         ]);
         
-        // Dalam versi lengkap, di sini bisa ditambahkan kode untuk mengirim email
-        // atau menyimpan pesan ke database
+        // Add additional data
+        $validated['ip_address'] = $request->ip();
+        $validated['user_agent'] = $request->userAgent();
+        $validated['status'] = 'unread';
         
-        return back()->with('success', 'Pesan Anda berhasil dikirim. Terima kasih telah menghubungi kami.');
+        try {
+            // Save contact submission to database
+            $submission = ContactSubmission::create($validated);
+            
+            // Send email notification to admin
+            // Mail::to(config('mail.admin_email'))->send(new ContactFormSubmitted($submission));
+            
+            return back()->with('success', 'Your message has been sent. Thank you for contacting us.');
+        } catch (\Exception $e) {
+            Log::error('Contact form error: ' . $e->getMessage());
+            return back()->withErrors(['error' => 'There was a problem sending your message. Please try again later.'])->withInput();
+        }
     }
 }

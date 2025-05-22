@@ -22,6 +22,24 @@ class PostController extends Controller
     }
 
     /**
+     * Display a listing of blog posts.
+     */
+    public function blog()
+    {
+        $posts = Post::where('category', 'blog')
+                     ->latest()
+                     ->paginate(9);
+        $categories = Post::select('category')->distinct()->get();
+        
+        return view('blog.index', [
+            'posts' => $posts,
+            'categories' => $categories,
+            'title' => 'Blog',
+            'isBlog' => true
+        ]);
+    }
+
+    /**
      * Display posts by category.
      */
     public function category($category)

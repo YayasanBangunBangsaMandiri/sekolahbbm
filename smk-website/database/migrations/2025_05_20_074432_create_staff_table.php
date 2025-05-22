@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('type')->default('teacher'); // teacher, staff, etc
+            $table->integer('order')->default(0); // Add order column
             $table->timestamps();
         });
     }

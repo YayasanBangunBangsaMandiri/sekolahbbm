@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('majors', function (Blueprint $table) {
+        Schema::create('programs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code')->unique();
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->string('icon')->nullable();
+            $table->enum('grade_level', ['elementary', 'middle', 'high', 'all'])->default('all');
+            $table->string('featured_image')->nullable();
+            $table->longText('content')->nullable();
+            $table->boolean('is_featured')->default(false);
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('majors');
+        Schema::dropIfExists('programs');
     }
 }; 

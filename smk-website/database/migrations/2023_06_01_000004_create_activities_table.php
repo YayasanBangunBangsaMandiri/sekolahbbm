@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('content');
-            $table->string('category');
+            $table->string('name');
             $table->string('slug')->unique();
+            $table->text('description')->nullable();
+            $table->longText('content')->nullable();
             $table->string('featured_image')->nullable();
-            $table->foreignId('author_id')->constrained('users');
+            $table->foreignId('program_id')->constrained()->onDelete('cascade');
+            $table->boolean('is_extracurricular')->default(false);
+            $table->string('schedule')->nullable();
+            $table->string('location')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('activities');
     }
-};
+}; 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Major extends Model
 {
     use HasFactory;
-
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -20,9 +20,9 @@ class Major extends Model
         'description',
         'icon',
     ];
-
+    
     /**
-     * Get the registrations for the major.
+     * Get the registrations for this major.
      */
     public function registrations()
     {
