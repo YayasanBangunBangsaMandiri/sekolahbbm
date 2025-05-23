@@ -20,7 +20,7 @@
         <link rel="icon" href="{{ asset('favicon.ico') }}">
         
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/scss/main.scss', 'resources/js/app.js'])
         
         <!-- AlpineJS -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.3/dist/cdn.min.js"></script>

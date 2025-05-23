@@ -1,0 +1,291 @@
+// Typography styles
+
+// Headings
+h1, .h1 {
+  font-size: 2.5rem;
+  
+  @include mobile {
+    font-size: 2rem;
+  }
+}
+
+h2, .h2 {
+  font-size: 2rem;
+  
+  @include mobile {
+    font-size: 1.75rem;
+  }
+}
+
+h3, .h3 {
+  font-size: 1.75rem;
+  
+  @include mobile {
+    font-size: 1.5rem;
+  }
+}
+
+h4, .h4 {
+  font-size: 1.5rem;
+  
+  @include mobile {
+    font-size: 1.25rem;
+  }
+}
+
+h5, .h5 {
+  font-size: 1.25rem;
+  
+  @include mobile {
+    font-size: 1.15rem;
+  }
+}
+
+h6, .h6 {
+  font-size: 1rem;
+}
+
+// Font weights
+.font-light {
+  font-weight: 300;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+// Text styling
+.text-primary {
+  color: $primary-blue !important;
+}
+
+.text-secondary {
+  color: $secondary-blue !important;
+}
+
+.text-accent {
+  color: $accent-gold !important;
+}
+
+.text-white {
+  color: $white !important;
+}
+
+.text-gray {
+  color: $dark-gray !important;
+}
+
+.text-muted {
+  color: $dark-gray !important;
+  opacity: 0.8;
+}
+
+// Text alignment
+.text-center {
+  text-align: center !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-justify {
+  text-align: justify !important;
+}
+
+// Text transforms
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+.text-lowercase {
+  text-transform: lowercase !important;
+}
+
+.text-capitalize {
+  text-transform: capitalize !important;
+}
+
+// Text decorations
+.text-underline {
+  text-decoration: underline !important;
+}
+
+.text-line-through {
+  text-decoration: line-through !important;
+}
+
+.text-no-decoration {
+  text-decoration: none !important;
+}
+
+// Font styles
+.text-italic {
+  font-style: italic !important;
+}
+
+.text-normal {
+  font-style: normal !important;
+}
+
+// Lead paragraph
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.5;
+  margin-bottom: spacing(4);
+}
+
+// Large text
+.text-lg {
+  font-size: 1.25rem !important;
+}
+
+// Small text
+.text-sm {
+  font-size: 0.875rem !important;
+}
+
+// Extra small text
+.text-xs {
+  font-size: 0.75rem !important;
+}
+
+// Link styles
+a {
+  &.link-primary {
+    color: $primary-blue;
+    
+    &:hover {
+      color: darken($primary-blue, 15%);
+    }
+  }
+  
+  &.link-secondary {
+    color: $secondary-blue;
+    
+    &:hover {
+      color: darken($secondary-blue, 15%);
+    }
+  }
+  
+  &.link-accent {
+    color: $accent-gold;
+    
+    &:hover {
+      color: darken($accent-gold, 15%);
+    }
+  }
+  
+  &.link-white {
+    color: $white;
+    
+    &:hover {
+      color: darken($white, 15%);
+    }
+  }
+}
+
+// Display headings (larger than h1)
+.display-1 {
+  font-size: 6rem;
+  font-weight: 300;
+  line-height: 1.1;
+  
+  @include mobile {
+    font-size: 4rem;
+  }
+}
+
+.display-2 {
+  font-size: 5.5rem;
+  font-weight: 300;
+  line-height: 1.1;
+  
+  @include mobile {
+    font-size: 3.5rem;
+  }
+}
+
+.display-3 {
+  font-size: 4.5rem;
+  font-weight: 300;
+  line-height: 1.1;
+  
+  @include mobile {
+    font-size: 3rem;
+  }
+}
+
+.display-4 {
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1.1;
+  
+  @include mobile {
+    font-size: 2.5rem;
+  }
+}
+
+// Blockquote
+blockquote, .blockquote {
+  padding: spacing(3) spacing(4);
+  margin-bottom: spacing(4);
+  font-size: 1.25rem;
+  border-left: 5px solid $accent-gold;
+  background-color: $light-gray;
+  
+  p {
+    font-style: italic;
+    margin-bottom: spacing(2);
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  footer, .blockquote-footer {
+    display: block;
+    font-size: 80%;
+    color: $dark-gray;
+    
+    &:before {
+      content: "\2014\00A0"; // em dash, nbsp
+    }
+  }
+}
+
+// Lists
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+  
+  .list-inline-item {
+    display: inline-block;
+    
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+  }
+} 

@@ -1,0 +1,31 @@
+// Main SCSS File - Green School Website
+// Inspired by greenschool.org design with custom color palette
+
+// Utils
+@import 'utils/variables';
+@import 'utils/mixins';
+@import 'utils/functions';
+
+// Base styles
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/utilities';
+
+// Components
+@import 'components/buttons';
+@import 'components/cards';
+@import 'components/forms';
+@import 'components/carousel';
+@import 'components/animations';
+
+// Layout
+@import 'layout/header';
+@import 'layout/navigation';
+@import 'layout/grid';
+@import 'layout/footer';
+
+// Pages
+@import 'pages/home';
+@import 'pages/about';
+@import 'pages/programs';
+@import 'pages/contact'; 

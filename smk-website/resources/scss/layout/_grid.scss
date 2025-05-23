@@ -1,0 +1,202 @@
+// Grid system
+.container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.container-sm {
+  max-width: 540px;
+}
+
+.container-md {
+  max-width: 720px;
+}
+
+.container-lg {
+  max-width: 960px;
+}
+
+.container-xl {
+  max-width: 1140px;
+}
+
+// Row
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+// Column classes
+@mixin make-col($size, $columns: 12) {
+  flex: 0 0 percentage($size / $columns);
+  max-width: percentage($size / $columns);
+}
+
+@mixin make-grid-columns($columns: 12, $breakpoints: (xs, sm, md, lg, xl)) {
+  @each $breakpoint in $breakpoints {
+    $infix: if($breakpoint == xs, "", "-#{$breakpoint}");
+    
+    @include respond-to($breakpoint) {
+      .col#{$infix} {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+      }
+      
+      .col#{$infix}-auto {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 100%;
+      }
+      
+      @for $i from 1 through $columns {
+        .col#{$infix}-#{$i} {
+          @include make-col($i, $columns);
+        }
+      }
+      
+      // Order classes
+      .order#{$infix}-first {
+        order: -1;
+      }
+      
+      .order#{$infix}-last {
+        order: $columns + 1;
+      }
+      
+      @for $i from 0 through $columns {
+        .order#{$infix}-#{$i} {
+          order: $i;
+        }
+      }
+      
+      // Offset classes
+      @for $i from 0 through ($columns - 1) {
+        .offset#{$infix}-#{$i} {
+          margin-left: if($i > 0, percentage($i / $columns), 0);
+        }
+      }
+    }
+  }
+}
+
+// Generate the grid
+@include make-grid-columns();
+
+// Basic layout styles
+.col {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+// Equal height columns
+.row-eq-height {
+  display: flex;
+  flex-wrap: wrap;
+  
+  > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+// Auto column system
+.grid {
+  display: grid;
+  grid-gap: 30px;
+  
+  &-2 {
+    grid-template-columns: repeat(2, 1fr);
+    
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &-3 {
+    grid-template-columns: repeat(3, 1fr);
+    
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+    
+    @include respond-to(md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  &-4 {
+    grid-template-columns: repeat(4, 1fr);
+    
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+    
+    @include respond-to(md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @include respond-to(lg) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  &-gap-sm {
+    grid-gap: 15px;
+  }
+  
+  &-gap-lg {
+    grid-gap: 45px;
+  }
+}
+
+// Masonry grid
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 30px;
+  grid-auto-flow: dense;
+  
+  .grid-item {
+    margin-bottom: 30px;
+    break-inside: avoid;
+    
+    &-wide {
+      grid-column: span 2;
+      
+      @include mobile {
+        grid-column: span 1;
+      }
+    }
+    
+    &-tall {
+      grid-row: span 2;
+    }
+    
+    &-large {
+      grid-column: span 2;
+      grid-row: span 2;
+      
+      @include mobile {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+    }
+  }
+} 

@@ -1,0 +1,174 @@
+// Responsive breakpoints
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: #{$breakpoint-sm - 1}) { @content; }
+  }
+  @else if $breakpoint == sm {
+    @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-md - 1}) { @content; }
+  }
+  @else if $breakpoint == md {
+    @media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-lg - 1}) { @content; }
+  }
+  @else if $breakpoint == lg {
+    @media (min-width: #{$breakpoint-lg}) and (max-width: #{$breakpoint-xl - 1}) { @content; }
+  }
+  @else if $breakpoint == xl {
+    @media (min-width: #{$breakpoint-xl}) { @content; }
+  }
+}
+
+// Responsive utils
+@mixin mobile {
+  @media (max-width: #{$breakpoint-md - 1}) { @content; }
+}
+
+@mixin tablet-up {
+  @media (min-width: #{$breakpoint-md}) { @content; }
+}
+
+@mixin desktop {
+  @media (min-width: #{$breakpoint-lg}) { @content; }
+}
+
+// Flexbox utilities
+@mixin flex($direction: row, $wrap: nowrap, $justify: flex-start, $align: stretch) {
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// Box shadow
+@mixin box-shadow($shadow...) {
+  box-shadow: $shadow;
+}
+
+@mixin card-shadow {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  
+  &:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Transitions
+@mixin transition($property: all, $duration: 0.3s, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+// Typography
+@mixin heading($size: 'md') {
+  font-family: $font-primary;
+  font-weight: 700;
+  line-height: 1.2;
+  color: $primary-blue;
+  
+  @if $size == 'xs' {
+    font-size: 1.25rem;
+  }
+  @else if $size == 'sm' {
+    font-size: 1.5rem;
+  }
+  @else if $size == 'md' {
+    font-size: 2rem;
+  }
+  @else if $size == 'lg' {
+    font-size: 2.5rem;
+  }
+  @else if $size == 'xl' {
+    font-size: 3rem;
+  }
+}
+
+@mixin section-padding {
+  padding: map-get($spacers, 6) 0;
+  
+  @include mobile {
+    padding: map-get($spacers, 5) 0;
+  }
+}
+
+// Green School specific mixins
+@mixin section-title {
+  @include heading('lg');
+  margin-bottom: map-get($spacers, 4);
+  position: relative;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.5rem;
+    width: 50px;
+    height: 3px;
+    background-color: $accent-gold;
+  }
+  
+  &.centered {
+    text-align: center;
+    
+    &:after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+// Buttons
+@mixin button-style($bg-color, $text-color, $hover-bg-color) {
+  background-color: $bg-color;
+  color: $text-color;
+  
+  &:hover, &:focus {
+    background-color: $hover-bg-color;
+  }
+}
+
+// Image overlay
+@mixin image-overlay($opacity: 0.7, $bg-color: $primary-blue) {
+  position: relative;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($bg-color, $opacity);
+    z-index: 1;
+  }
+  
+  > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// Grid system
+@mixin make-container() {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+} 

@@ -1,0 +1,51 @@
+// Calculate rem from pixels
+@function rem($pixels) {
+  @return $pixels / 16px * 1rem;
+}
+
+// Get color with opacity
+@function rgba-color($color, $opacity) {
+  @return rgba($color, $opacity);
+}
+
+// Get color from palette
+@function color($key) {
+  @if $key == 'primary' {
+    @return $primary-blue;
+  }
+  @else if $key == 'secondary' {
+    @return $secondary-blue;
+  }
+  @else if $key == 'accent' {
+    @return $accent-gold;
+  }
+  @else if $key == 'white' {
+    @return $white;
+  }
+  @else if $key == 'light-gray' {
+    @return $light-gray;
+  }
+  @else if $key == 'medium-gray' {
+    @return $medium-gray;
+  }
+  @else if $key == 'dark-gray' {
+    @return $dark-gray;
+  }
+  @else if $key == 'text' {
+    @return $text-color;
+  }
+  @else {
+    @error "Unknown color key: #{$key}";
+    @return null;
+  }
+}
+
+// Get spacing value
+@function spacing($key) {
+  @if map-has-key($spacers, $key) {
+    @return map-get($spacers, $key);
+  }
+  
+  @error "Unknown spacing key: #{$key}";
+  @return null;
+} 

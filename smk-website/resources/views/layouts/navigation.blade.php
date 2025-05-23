@@ -28,9 +28,6 @@
                     <x-nav-link :href="route('news')" :active="request()->routeIs('news*')">
                         News & Events
                     </x-nav-link>
-                    <x-nav-link :href="route('news')" :active="request()->routeIs('blog*')">
-                        Blog
-                    </x-nav-link>
                     <x-nav-link :href="route('gallery')" :active="request()->routeIs('gallery*')">
                         Gallery
                     </x-nav-link>
@@ -115,9 +112,6 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('news')" :active="request()->routeIs('news*')">
                 News & Events
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('news')" :active="request()->routeIs('blog*')">
-                Blog
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('gallery')" :active="request()->routeIs('gallery*')">
                 Gallery

@@ -1,0 +1,59 @@
+// Color palette
+$primary-blue: #2C3E50;
+$secondary-blue: #3498DB;
+$accent-gold: #F1C40F;
+$white: #FFFFFF;
+$light-gray: #F8F9FA;
+$medium-gray: #E9ECEF;
+$dark-gray: #6C757D;
+$text-color: #333333;
+
+// Typography
+$font-primary: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+$font-secondary: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+$font-size-base: 1rem;
+$line-height-base: 1.6;
+
+// Container widths
+$container-max-width: 1200px;
+$container-padding: 0 15px;
+
+// Breakpoints
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// Transitions
+$transition-base: all 0.3s ease;
+$transition-slow: all 0.5s ease;
+$transition-fast: all 0.2s ease;
+
+// Spacing
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,  // 0.25rem
+  2: $spacer * 0.5,   // 0.5rem
+  3: $spacer,         // 1rem
+  4: $spacer * 1.5,   // 1.5rem 
+  5: $spacer * 3,     // 3rem
+  6: $spacer * 4,     // 4rem
+  7: $spacer * 5      // 5rem
+);
+
+// Border radius
+$border-radius: 4px;
+$border-radius-lg: 8px;
+$border-radius-sm: 2px;
+$border-radius-circle: 50%; 
