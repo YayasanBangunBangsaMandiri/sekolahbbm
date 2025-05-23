@@ -1,10 +1,13 @@
 // Typography styles
+@use '../utils/variables' as vars;
+@use '../utils/mixins' as mixins;
+@use 'sass:color';
 
 // Headings
 h1, .h1 {
   font-size: 2.5rem;
   
-  @include mobile {
+  @include mixins.mobile {
     font-size: 2rem;
   }
 }
@@ -12,7 +15,7 @@ h1, .h1 {
 h2, .h2 {
   font-size: 2rem;
   
-  @include mobile {
+  @include mixins.mobile {
     font-size: 1.75rem;
   }
 }
@@ -20,7 +23,7 @@ h2, .h2 {
 h3, .h3 {
   font-size: 1.75rem;
   
-  @include mobile {
+  @include mixins.mobile {
     font-size: 1.5rem;
   }
 }
@@ -28,7 +31,7 @@ h3, .h3 {
 h4, .h4 {
   font-size: 1.5rem;
   
-  @include mobile {
+  @include mixins.mobile {
     font-size: 1.25rem;
   }
 }
@@ -36,7 +39,7 @@ h4, .h4 {
 h5, .h5 {
   font-size: 1.25rem;
   
-  @include mobile {
+  @include mixins.mobile {
     font-size: 1.15rem;
   }
 }
@@ -68,27 +71,27 @@ h6, .h6 {
 
 // Text styling
 .text-primary {
-  color: $primary-blue !important;
+  color: vars.$primary-blue !important;
 }
 
 .text-secondary {
-  color: $secondary-blue !important;
+  color: vars.$secondary-blue !important;
 }
 
 .text-accent {
-  color: $accent-gold !important;
+  color: vars.$accent-gold !important;
 }
 
 .text-white {
-  color: $white !important;
+  color: vars.$white !important;
 }
 
 .text-gray {
-  color: $dark-gray !important;
+  color: vars.$dark-gray !important;
 }
 
 .text-muted {
-  color: $dark-gray !important;
+  color: vars.$dark-gray !important;
   opacity: 0.8;
 }
 
@@ -170,34 +173,34 @@ h6, .h6 {
 // Link styles
 a {
   &.link-primary {
-    color: $primary-blue;
+    color: vars.$primary-blue;
     
     &:hover {
-      color: darken($primary-blue, 15%);
+      color: color.adjust(vars.$primary-blue, $lightness: -15%);
     }
   }
   
   &.link-secondary {
-    color: $secondary-blue;
+    color: vars.$secondary-blue;
     
     &:hover {
-      color: darken($secondary-blue, 15%);
+      color: color.adjust(vars.$secondary-blue, $lightness: -15%);
     }
   }
   
   &.link-accent {
-    color: $accent-gold;
+    color: vars.$accent-gold;
     
     &:hover {
-      color: darken($accent-gold, 15%);
+      color: color.adjust(vars.$accent-gold, $lightness: -15%);
     }
   }
   
   &.link-white {
-    color: $white;
+    color: vars.$white;
     
     &:hover {
-      color: darken($white, 15%);
+      color: color.adjust(vars.$white, $lightness: -15%);
     }
   }
 }
@@ -208,7 +211,7 @@ a {
   font-weight: 300;
   line-height: 1.1;
   
-  @include mobile {
+  @include mixins.mobile {
     font-size: 4rem;
   }
 }
@@ -218,7 +221,7 @@ a {
   font-weight: 300;
   line-height: 1.1;
   
-  @include mobile {
+  @include mixins.mobile {
     font-size: 3.5rem;
   }
 }
@@ -228,7 +231,7 @@ a {
   font-weight: 300;
   line-height: 1.1;
   
-  @include mobile {
+  @include mixins.mobile {
     font-size: 3rem;
   }
 }
@@ -238,7 +241,7 @@ a {
   font-weight: 300;
   line-height: 1.1;
   
-  @include mobile {
+  @include mixins.mobile {
     font-size: 2.5rem;
   }
 }
@@ -248,11 +251,10 @@ blockquote, .blockquote {
   padding: spacing(3) spacing(4);
   margin-bottom: spacing(4);
   font-size: 1.25rem;
-  border-left: 5px solid $accent-gold;
-  background-color: $light-gray;
+  border-left: 5px solid vars.$accent-gold;
+  background-color: rgba(vars.$accent-gold, 0.1);
   
   p {
-    font-style: italic;
     margin-bottom: spacing(2);
     
     &:last-child {
@@ -260,14 +262,22 @@ blockquote, .blockquote {
     }
   }
   
-  footer, .blockquote-footer {
+  footer {
     display: block;
     font-size: 80%;
-    color: $dark-gray;
+    color: vars.$dark-gray;
     
-    &:before {
-      content: "\2014\00A0"; // em dash, nbsp
+    &::before {
+      content: "\2014 \00A0"; // Em dash and non-breaking space
     }
+  }
+  
+  &.blockquote-reverse {
+    padding-right: spacing(4);
+    padding-left: spacing(3);
+    text-align: right;
+    border-right: 5px solid vars.$accent-gold;
+    border-left: 0;
   }
 }
 

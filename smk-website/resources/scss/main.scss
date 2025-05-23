@@ -1,31 +1,35 @@
 // Main SCSS File - Green School Website
-// Inspired by greenschool.org design with custom color palette
+@use 'sass:color';
+@use 'sass:math';
 
 // Utils
-@import 'utils/variables';
-@import 'utils/mixins';
-@import 'utils/functions';
+@use 'utils/variables' as *;
+@use 'utils/mixins' as *;
+@use 'utils/functions' as *;
 
-// Base styles
-@import 'base/reset';
-@import 'base/typography';
-@import 'base/utilities';
+// Base
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/utilities';
 
 // Components
-@import 'components/buttons';
-@import 'components/cards';
-@import 'components/forms';
-@import 'components/carousel';
-@import 'components/animations';
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/forms';
+@use 'components/carousel';
+@use 'components/animations';
 
 // Layout
-@import 'layout/header';
-@import 'layout/navigation';
-@import 'layout/grid';
-@import 'layout/footer';
+@use 'layout/header';
+@use 'layout/navigation/navbar';
+@use 'layout/navigation/mega-menu';
+@use 'layout/navigation/mobile-menu';
+@use 'layout/navigation/dropdown';
+@use 'layout/grid';
+@use 'layout/footer';
 
 // Pages
-@import 'pages/home';
-@import 'pages/about';
-@import 'pages/programs';
-@import 'pages/contact'; 
+@use 'pages/home';
+@use 'pages/about';
+@use 'pages/programs';
+@use 'pages/contact';

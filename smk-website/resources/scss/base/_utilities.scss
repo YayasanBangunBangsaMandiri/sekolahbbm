@@ -1,5 +1,6 @@
-// Utilities
-// Import Tailwind
+@use '../utils/variables' as vars;
+@use '../utils/mixins' as mixins;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -117,7 +118,7 @@
 }
 
 // Margin utilities
-@each $size, $value in $spacers {
+@each $size, $value in vars.$spacers {
   .m-#{$size} {
     margin: $value !important;
   }
@@ -180,7 +181,7 @@
 }
 
 // Padding utilities
-@each $size, $value in $spacers {
+@each $size, $value in vars.$spacers {
   .p-#{$size} {
     padding: $value !important;
   }
@@ -300,7 +301,7 @@
 
 // Border
 .border {
-  border: 1px solid $medium-gray !important;
+  border: 1px solid vars.$medium-gray !important;
 }
 
 .border-0 {
@@ -308,7 +309,7 @@
 }
 
 .border-top {
-  border-top: 1px solid $medium-gray !important;
+  border-top: 1px solid vars.$medium-gray !important;
 }
 
 .border-top-0 {
@@ -316,7 +317,7 @@
 }
 
 .border-right {
-  border-right: 1px solid $medium-gray !important;
+  border-right: 1px solid vars.$medium-gray !important;
 }
 
 .border-right-0 {
@@ -324,7 +325,7 @@
 }
 
 .border-bottom {
-  border-bottom: 1px solid $medium-gray !important;
+  border-bottom: 1px solid vars.$medium-gray !important;
 }
 
 .border-bottom-0 {
@@ -332,7 +333,7 @@
 }
 
 .border-left {
-  border-left: 1px solid $medium-gray !important;
+  border-left: 1px solid vars.$medium-gray !important;
 }
 
 .border-left-0 {
@@ -340,44 +341,44 @@
 }
 
 .border-primary {
-  border-color: $primary-blue !important;
+  border-color: vars.$primary-blue !important;
 }
 
 .border-secondary {
-  border-color: $secondary-blue !important;
+  border-color: vars.$secondary-blue !important;
 }
 
 .border-accent {
-  border-color: $accent-gold !important;
+  border-color: vars.$accent-gold !important;
 }
 
 .border-white {
-  border-color: $white !important;
+  border-color: vars.$white !important;
 }
 
 // Border radius
 .rounded {
-  border-radius: $border-radius !important;
+  border-radius: vars.$border-radius !important;
 }
 
 .rounded-top {
-  border-top-left-radius: $border-radius !important;
-  border-top-right-radius: $border-radius !important;
+  border-top-left-radius: vars.$border-radius !important;
+  border-top-right-radius: vars.$border-radius !important;
 }
 
 .rounded-right {
-  border-top-right-radius: $border-radius !important;
-  border-bottom-right-radius: $border-radius !important;
+  border-top-right-radius: vars.$border-radius !important;
+  border-bottom-right-radius: vars.$border-radius !important;
 }
 
 .rounded-bottom {
-  border-bottom-right-radius: $border-radius !important;
-  border-bottom-left-radius: $border-radius !important;
+  border-bottom-right-radius: vars.$border-radius !important;
+  border-bottom-left-radius: vars.$border-radius !important;
 }
 
 .rounded-left {
-  border-top-left-radius: $border-radius !important;
-  border-bottom-left-radius: $border-radius !important;
+  border-top-left-radius: vars.$border-radius !important;
+  border-bottom-left-radius: vars.$border-radius !important;
 }
 
 .rounded-circle {
@@ -393,32 +394,32 @@
 }
 
 .rounded-sm {
-  border-radius: $border-radius-sm !important;
+  border-radius: vars.$border-radius-sm !important;
 }
 
 .rounded-lg {
-  border-radius: $border-radius-lg !important;
+  border-radius: vars.$border-radius-lg !important;
 }
 
 // Background
 .bg-primary {
-  background-color: $primary-blue !important;
+  background-color: vars.$primary-blue !important;
 }
 
 .bg-secondary {
-  background-color: $secondary-blue !important;
+  background-color: vars.$secondary-blue !important;
 }
 
 .bg-accent {
-  background-color: $accent-gold !important;
+  background-color: vars.$accent-gold !important;
 }
 
 .bg-light {
-  background-color: $light-gray !important;
+  background-color: vars.$light-gray !important;
 }
 
 .bg-white {
-  background-color: $white !important;
+  background-color: vars.$white !important;
 }
 
 .bg-transparent {
@@ -483,4 +484,4 @@
     clip: auto;
     white-space: normal;
   }
-} 
+}

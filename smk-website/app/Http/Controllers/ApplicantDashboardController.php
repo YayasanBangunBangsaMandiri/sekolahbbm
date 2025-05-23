@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class ApplicantDashboardController extends Controller
 {
@@ -107,5 +108,42 @@ class ApplicantDashboardController extends Controller
         
         return redirect()->route('applicant.dashboard')
                         ->with('success', 'Your profile has been successfully updated.');
+    }
+
+    /**
+     * Download the acceptance letter for accepted applicants.
+     */
+    public function downloadAcceptanceLetter()
+    {
+        // Check if applicant is logged in
+        if (!session('applicant_id')) {
+            return redirect()->route('applicant.login');
+        }
+        
+        $registration = Registration::find(session('applicant_id'));
+        
+        if (!$registration || $registration->status !== 'accepted') {
+            return redirect()->route('applicant.dashboard')
+                           ->with('error', 'Surat penerimaan tidak tersedia.');
+        }
+
+        // Get letter settings
+        $setting = \App\Models\LetterSetting::first();
+        if (!$setting) {
+            return redirect()->route('applicant.dashboard')
+                           ->with('error', 'Pengaturan surat belum dikonfigurasi.');
+        }
+
+        // Generate PDF using view
+        $pdf = PDF::loadView('pdf.acceptance-letter', [
+            'registration' => $registration,
+            'setting' => $setting
+        ]);
+
+        // Set paper size and orientation
+        $pdf->setPaper($setting->paper_size, $setting->paper_orientation);
+
+        // Return the PDF for download
+        return $pdf->download('surat-penerimaan.pdf');
     }
 }

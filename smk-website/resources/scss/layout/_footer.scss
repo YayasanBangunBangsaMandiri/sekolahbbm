@@ -1,15 +1,19 @@
+@use '../utils/variables' as vars;
+@use '../utils/mixins' as mixins;
+@use 'sass:color';
+
 // Footer styles inspired by greenschool.org
 .footer {
-  background-color: $primary-blue;
-  color: rgba($white, 0.8);
+  background-color: vars.$primary-blue;
+  color: rgba(vars.$white, 0.8);
   position: relative;
   
   // Footer top section with columns
   .footer-top {
     padding: 5rem 0 3rem;
-    border-bottom: 1px solid rgba($white, 0.1);
+    border-bottom: 1px solid rgba(vars.$white, 0.1);
     
-    @include mobile {
+    @include mixins.mobile {
       padding: 3rem 0 2rem;
     }
     
@@ -36,15 +40,15 @@
         justify-content: center;
         width: 40px;
         height: 40px;
-        background-color: rgba($white, 0.1);
-        color: $white;
+        background-color: rgba(vars.$white, 0.1);
+        color: vars.$white;
         border-radius: 50%;
         margin-right: 10px;
-        @include transition();
+        @include mixins.transition();
         
         &:hover {
-          background-color: $accent-gold;
-          color: $primary-blue;
+          background-color: vars.$accent-gold;
+          color: vars.$primary-blue;
           transform: translateY(-3px);
         }
       }
@@ -63,12 +67,12 @@
       padding: 0 15px;
       margin-bottom: 2rem;
       
-      @include mobile {
+      @include mixins.mobile {
         flex: 0 0 100%;
       }
       
       .widget-title {
-        color: $white;
+        color: vars.$white;
         font-weight: 600;
         font-size: 1.25rem;
         margin-bottom: 1.5rem;
@@ -82,7 +86,7 @@
           bottom: 0;
           width: 50px;
           height: 3px;
-          background-color: $accent-gold;
+          background-color: vars.$accent-gold;
         }
       }
       
@@ -95,22 +99,22 @@
           margin-bottom: 0.75rem;
           
           a {
-            color: rgba($white, 0.8);
+            color: rgba(vars.$white, 0.8);
             text-decoration: none;
             display: block;
-            @include transition();
+            @include mixins.transition();
             
             &:hover {
-              color: $accent-gold;
+              color: vars.$accent-gold;
               padding-left: 5px;
             }
             
             &:before {
               content: '\2192'; // Right arrow
               margin-right: 0.5rem;
-              color: $accent-gold;
+              color: vars.$accent-gold;
               opacity: 0;
-              @include transition();
+              @include mixins.transition();
             }
             
             &:hover:before {
@@ -133,16 +137,16 @@
         flex-shrink: 0;
         margin-right: 0.75rem;
         margin-top: 5px;
-        color: $accent-gold;
+        color: vars.$accent-gold;
       }
       
       .contact-text {
         a {
-          color: rgba($white, 0.8);
-          @include transition();
+          color: rgba(vars.$white, 0.8);
+          @include mixins.transition();
           
           &:hover {
-            color: $accent-gold;
+            color: vars.$accent-gold;
           }
         }
       }
@@ -156,36 +160,36 @@
       
       input {
         width: 100%;
-        background-color: rgba($white, 0.1);
+        background-color: rgba(vars.$white, 0.1);
         border: none;
-        border-radius: $border-radius;
+        border-radius: vars.$border-radius;
         padding: 0.875rem 1rem;
-        color: $white;
+        color: vars.$white;
         margin-bottom: 1rem;
         
         &::placeholder {
-          color: rgba($white, 0.5);
+          color: rgba(vars.$white, 0.5);
         }
         
         &:focus {
           outline: none;
-          background-color: rgba($white, 0.15);
+          background-color: rgba(vars.$white, 0.15);
         }
       }
       
       button {
         width: 100%;
         border: none;
-        background-color: $accent-gold;
-        color: $primary-blue;
+        background-color: vars.$accent-gold;
+        color: vars.$primary-blue;
         font-weight: 600;
         padding: 0.875rem 1rem;
-        border-radius: $border-radius;
+        border-radius: vars.$border-radius;
         cursor: pointer;
-        @include transition();
+        @include mixins.transition();
         
         &:hover {
-          background-color: darken($accent-gold, 10%);
+          background-color: color.adjust(vars.$accent-gold, $lightness: -10%);
         }
       }
     }
@@ -198,10 +202,10 @@
     
     .copyright {
       font-size: 0.875rem;
-      color: rgba($white, 0.6);
+      color: rgba(vars.$white, 0.6);
       
       a {
-        color: $accent-gold;
+        color: vars.$accent-gold;
         text-decoration: none;
         
         &:hover {
@@ -214,14 +218,14 @@
       margin-top: 0.5rem;
       
       a {
-        color: rgba($white, 0.6);
+        color: rgba(vars.$white, 0.6);
         font-size: 0.875rem;
         margin: 0 10px;
         text-decoration: none;
-        @include transition();
+        @include mixins.transition();
         
         &:hover {
-          color: $accent-gold;
+          color: vars.$accent-gold;
         }
       }
     }
@@ -234,19 +238,19 @@
     bottom: 30px;
     width: 50px;
     height: 50px;
-    background-color: $accent-gold;
-    color: $primary-blue;
+    background-color: vars.$accent-gold;
+    color: vars.$primary-blue;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
     cursor: pointer;
-    @include transition();
+    @include mixins.transition();
     
     &:hover {
       transform: translateY(-10px);
-      background-color: $white;
+      background-color: vars.$white;
     }
   }
 } 

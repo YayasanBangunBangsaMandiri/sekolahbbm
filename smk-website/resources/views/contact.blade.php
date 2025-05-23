@@ -68,7 +68,7 @@
                 </div>
                 
                 <div class="contact-form-wrapper">
-                    <form action="{{ route('contact.submit') }}" method="POST" class="contact-form">
+                    <form action="{{ route('contact.send') }}" method="POST" class="contact-form">
                         @csrf
                         <div class="form-title">
                             <h3>Send us a message</h3>

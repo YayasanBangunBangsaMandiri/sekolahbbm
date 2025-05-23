@@ -1,17 +1,15 @@
-// Animation styles
+@use '../utils/variables' as vars;
+@use '../utils/mixins' as mixins;
+
+// _animations.scss
+// =====================
+// Animations Keyframes
+// =====================
 
 // Fade In
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.fade-in {
-  animation: fadeIn 0.8s ease forwards;
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 // Fade In Up
@@ -26,10 +24,6 @@
   }
 }
 
-.fade-in-up {
-  animation: fadeInUp 0.8s ease forwards;
-}
-
 // Fade In Left
 @keyframes fadeInLeft {
   from {
@@ -40,10 +34,6 @@
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
-}
-
-.fade-in-left {
-  animation: fadeInLeft 0.8s ease forwards;
 }
 
 // Fade In Right
@@ -58,23 +48,13 @@
   }
 }
 
-.fade-in-right {
-  animation: fadeInRight 0.8s ease forwards;
-}
-
 // Zoom In
 @keyframes zoomIn {
   from {
     opacity: 0;
     transform: scale3d(0.3, 0.3, 0.3);
   }
-  50% {
-    opacity: 1;
-  }
-}
-
-.zoom-in {
-  animation: zoomIn 0.8s ease forwards;
+  50% { opacity: 1; }
 }
 
 // Bounce
@@ -96,11 +76,7 @@
   }
 }
 
-.bounce {
-  animation: bounce 1s ease infinite;
-}
-
-// Scroll Arrow Animation
+// Scroll Arrow
 @keyframes scrollArrow {
   0% {
     transform: translateY(0);
@@ -116,83 +92,47 @@
   }
 }
 
-.scroll-arrow {
-  animation: scrollArrow 2s infinite ease-in-out;
-}
-
-// Pulse Animation
+// Pulse
 @keyframes pulse {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba($accent-gold, 0.4);
+    box-shadow: 0 0 0 0 rgba(vars.$accent-gold, 0.4);
   }
   70% {
     transform: scale(1.05);
-    box-shadow: 0 0 0 15px rgba($accent-gold, 0);
+    box-shadow: 0 0 0 15px rgba(vars.$accent-gold, 0);
   }
   100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba($accent-gold, 0);
+    box-shadow: 0 0 0 0 rgba(vars.$accent-gold, 0);
   }
 }
 
-.pulse {
-  animation: pulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
-}
-
-// Shake Animation
+// Shake
 @keyframes shake {
-  from, to {
-    transform: translate3d(0, 0, 0);
-  }
-  10%, 30%, 50%, 70%, 90% {
-    transform: translate3d(-10px, 0, 0);
-  }
-  20%, 40%, 60%, 80% {
-    transform: translate3d(10px, 0, 0);
-  }
+  from, to { transform: translate3d(0, 0, 0); }
+  10%, 30%, 50%, 70%, 90% { transform: translate3d(-10px, 0, 0); }
+  20%, 40%, 60%, 80% { transform: translate3d(10px, 0, 0); }
 }
 
-.shake {
-  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-}
-
-// Rotate Animation
+// Rotate
 @keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.rotate {
-  animation: rotate 2s linear infinite;
-}
-
-// Typing Animation for text
+// Typing
 @keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+  from { width: 0; }
+  to { width: 100%; }
 }
 
 @keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: $accent-gold }
+  from, to { border-color: transparent; }
+  50% { border-color: vars.$accent-gold; }
 }
 
-.typing-animation {
-  overflow: hidden;
-  border-right: .15em solid $accent-gold;
-  white-space: nowrap;
-  letter-spacing: .05em;
-  animation: 
-    typing 3.5s steps(40, end),
-    blink-caret .75s step-end infinite;
-}
-
-// Slide In From Top Animation for Sticky Header
+// Slide In Down
 @keyframes slideInDown {
   from {
     transform: translateY(-100%);
@@ -203,112 +143,181 @@
   }
 }
 
-.slide-in-down {
-  animation: slideInDown 0.5s ease forwards;
-}
-
-// Tilt Element Animation
-.tilt-element {
-  transition: transform 0.3s ease;
-  
-  &:hover {
-    transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
-  }
-}
-
-// Floating Animation
+// Floating
 @keyframes floating {
   0% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
   100% { transform: translateY(0); }
 }
 
+// Ripple
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  20% {
+    transform: scale(25, 25);
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(40, 40);
+  }
+}
+
+// =====================
+// Animation Classes
+// =====================
+
+.fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.fade-in-left {
+  animation: fadeInLeft 0.8s ease forwards;
+}
+
+.fade-in-right {
+  animation: fadeInRight 0.8s ease forwards;
+}
+
+.zoom-in {
+  animation: zoomIn 0.8s ease forwards;
+}
+
+.bounce {
+  animation: bounce 1s ease infinite;
+}
+
+.scroll-arrow {
+  animation: scrollArrow 2s infinite ease-in-out;
+}
+
+.pulse {
+  animation: pulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
+}
+
+.shake {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.rotate {
+  animation: rotate 2s linear infinite;
+}
+
+.typing-animation {
+  overflow: hidden;
+  border-right: .15em solid vars.$accent-gold;
+  white-space: nowrap;
+  letter-spacing: .05em;
+  animation: 
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+}
+
+.slide-in-down {
+  animation: slideInDown 0.5s ease forwards;
+}
+
+.tilt-element {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+  }
+}
+
 .floating {
   animation: floating 3s ease-in-out infinite;
 }
 
-// Animation Delays
+// Animation delay classes (delay-100ms ... delay-1000ms)
 @for $i from 1 through 10 {
   .delay-#{$i}00ms {
     animation-delay: #{$i * 100}ms;
   }
 }
 
-// Button Hover Effects
+// Button Hover Effect
 .btn-hover-effect {
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    z-index: -1;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(vars.$accent-gold, 0.1);
     transform: scaleX(0);
     transform-origin: right;
-    transition: transform 0.5s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    transition: transform 0.3s ease;
   }
-  
+
   &:hover::before {
     transform: scaleX(1);
     transform-origin: left;
   }
 }
 
-// Background Color Transition
+// Background color transition on hover
 .bg-transition {
   transition: background-color 0.5s ease;
-  
+
   &:hover {
-    background-color: rgba($accent-gold, 0.1);
+    background-color: rgba(vars.$accent-gold, 0.1);
   }
 }
 
-// Scale on Hover
+// Scale on hover
 .scale-on-hover {
   transition: transform 0.3s ease;
-  
+
   &:hover {
     transform: scale(1.05);
   }
 }
 
 // Ripple Effect
-.ripple {
+.ripple-effect {
   position: relative;
   overflow: hidden;
-  
+
   &::after {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.5);
-    opacity: 0;
-    border-radius: 100%;
-    transform: scale(1, 1) translate(-50%, -50%);
-    transform-origin: 50% 50%;
+    width: 100px;
+    height: 100px;
+    background: rgba(vars.$white, 0.2);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    transform-origin: center;
   }
-  
-  &:active::after {
-    animation: ripple 1s ease-out;
+}
+
+// Hover Glow
+.hover-glow {
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0 15px rgba(vars.$accent-gold, 0.5);
   }
-  
-  @keyframes ripple {
-    0% {
-      transform: scale(0, 0);
-      opacity: 0.5;
-    }
-    20% {
-      transform: scale(25, 25);
-      opacity: 0.3;
-    }
-    100% {
-      opacity: 0;
-      transform: scale(40, 40);
-    }
-  }
-} 
+}
+
+// Gradient Text Animation
+.gradient-text {
+  background: linear-gradient(45deg, vars.$primary-blue, vars.$accent-gold);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 5s ease infinite;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

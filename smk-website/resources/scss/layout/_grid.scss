@@ -1,7 +1,11 @@
+@use '../utils/variables' as vars;
+@use '../utils/mixins' as mixins;
+@use 'sass:math';
+
 // Grid system
 .container {
   width: 100%;
-  max-width: $container-max-width;
+  max-width: vars.$container-max-width;
   margin-right: auto;
   margin-left: auto;
   padding-right: 15px;
@@ -42,15 +46,15 @@
 
 // Column classes
 @mixin make-col($size, $columns: 12) {
-  flex: 0 0 percentage($size / $columns);
-  max-width: percentage($size / $columns);
+  flex: 0 0 math.percentage(math.div($size, $columns));
+  max-width: math.percentage(math.div($size, $columns));
 }
 
 @mixin make-grid-columns($columns: 12, $breakpoints: (xs, sm, md, lg, xl)) {
   @each $breakpoint in $breakpoints {
     $infix: if($breakpoint == xs, "", "-#{$breakpoint}");
     
-    @include respond-to($breakpoint) {
+    @include mixins.respond-to($breakpoint) {
       .col#{$infix} {
         flex-basis: 0;
         flex-grow: 1;
@@ -87,7 +91,7 @@
       // Offset classes
       @for $i from 0 through ($columns - 1) {
         .offset#{$infix}-#{$i} {
-          margin-left: if($i > 0, percentage($i / $columns), 0);
+          margin-left: if($i > 0, math.percentage(math.div($i, $columns)), 0);
         }
       }
     }
@@ -124,7 +128,7 @@
   &-2 {
     grid-template-columns: repeat(2, 1fr);
     
-    @include mobile {
+    @include mixins.mobile {
       grid-template-columns: 1fr;
     }
   }
@@ -132,11 +136,11 @@
   &-3 {
     grid-template-columns: repeat(3, 1fr);
     
-    @include mobile {
+    @include mixins.mobile {
       grid-template-columns: 1fr;
     }
     
-    @include respond-to(md) {
+    @include mixins.respond-to(md) {
       grid-template-columns: repeat(2, 1fr);
     }
   }
@@ -144,15 +148,15 @@
   &-4 {
     grid-template-columns: repeat(4, 1fr);
     
-    @include mobile {
+    @include mixins.mobile {
       grid-template-columns: 1fr;
     }
     
-    @include respond-to(md) {
+    @include mixins.respond-to(md) {
       grid-template-columns: repeat(2, 1fr);
     }
     
-    @include respond-to(lg) {
+    @include mixins.respond-to(lg) {
       grid-template-columns: repeat(4, 1fr);
     }
   }
@@ -180,7 +184,7 @@
     &-wide {
       grid-column: span 2;
       
-      @include mobile {
+      @include mixins.mobile {
         grid-column: span 1;
       }
     }
@@ -193,7 +197,7 @@
       grid-column: span 2;
       grid-row: span 2;
       
-      @include mobile {
+      @include mixins.mobile {
         grid-column: span 1;
         grid-row: span 1;
       }

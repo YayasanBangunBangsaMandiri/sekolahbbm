@@ -15,10 +15,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->paginate(9);
-        $categories = Post::select('category')->distinct()->get();
-        
-        return view('blog.index', compact('posts', 'categories'));
+        $posts = Post::where('type', 'news')
+            ->latest()
+            ->paginate(9);
+        return view('news.index', compact('posts'));
     }
 
     /**
@@ -26,17 +26,10 @@ class PostController extends Controller
      */
     public function blog()
     {
-        $posts = Post::where('category', 'blog')
-                     ->latest()
-                     ->paginate(9);
-        $categories = Post::select('category')->distinct()->get();
-        
-        return view('blog.index', [
-            'posts' => $posts,
-            'categories' => $categories,
-            'title' => 'Blog',
-            'isBlog' => true
-        ]);
+        $posts = Post::where('type', 'blog')
+            ->latest()
+            ->paginate(9);
+        return view('blog.index', compact('posts'));
     }
 
     /**
@@ -44,12 +37,11 @@ class PostController extends Controller
      */
     public function category($category)
     {
-        $posts = Post::where('category', $category)
-                     ->latest()
-                     ->paginate(9);
-        $categories = Post::select('category')->distinct()->get();
+        $posts = Post::whereHas('categories', function($query) use ($category) {
+            $query->where('slug', $category);
+        })->latest()->paginate(9);
         
-        return view('blog.index', compact('posts', 'categories', 'category'));
+        return view('news.category', compact('posts', 'category'));
     }
 
     /**
@@ -101,16 +93,20 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $slug)
+    public function show($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
-        $relatedPosts = Post::where('category', $post->category)
-                            ->where('id', '!=', $post->id)
-                            ->latest()
-                            ->take(3)
-                            ->get();
-        
-        return view('blog.show', compact('post', 'relatedPosts'));
+        $relatedPosts = Post::where('type', $post->type)
+            ->where('id', '!=', $post->id)
+            ->latest()
+            ->take(3)
+            ->get();
+
+        if ($post->type === 'blog') {
+            return view('blog.show', compact('post', 'relatedPosts'));
+        }
+
+        return view('news.show', compact('post', 'relatedPosts'));
     }
 
     /**
@@ -175,5 +171,14 @@ class PostController extends Controller
         
         return redirect()->route('admin.posts.index')
                         ->with('success', 'Post berhasil dihapus.');
+    }
+
+    public function tag($tag)
+    {
+        $posts = Post::whereHas('tags', function($query) use ($tag) {
+            $query->where('slug', $tag);
+        })->latest()->paginate(9);
+        
+        return view('news.tag', compact('posts', 'tag'));
     }
 }

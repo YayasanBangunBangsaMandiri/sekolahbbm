@@ -1,0 +1,41 @@
+@use '../../utils/variables' as vars;
+@use '../../utils/mixins' as mixins;
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: -1rem;
+    min-width: 220px;
+    background: vars.$white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    z-index: 50;
+    overflow: hidden;
+
+    // Animasi
+    .transition {
+        transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+    }
+
+    // Item dropdown
+    .dropdown-item {
+        display: block;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.875rem;
+        color: vars.$primary-blue;
+        text-decoration: none;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: rgba(vars.$secondary-blue, 0.05);
+            color: vars.$secondary-blue;
+        }
+
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+    }
+}
+  

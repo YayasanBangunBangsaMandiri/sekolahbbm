@@ -1,3 +1,7 @@
+@use '../utils/variables' as vars;
+@use '../utils/mixins' as mixins;
+@use 'sass:color';
+
 // Form styles
 .form-group {
   margin-bottom: 1.5rem;
@@ -7,7 +11,7 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: $primary-blue;
+  color: vars.$primary-blue;
 }
 
 .form-control {
@@ -16,29 +20,29 @@
   padding: 0.75rem 1rem;
   font-size: 1rem;
   line-height: 1.5;
-  color: $text-color;
-  background-color: $white;
+  color: vars.$text-color;
+  background-color: vars.$white;
   background-clip: padding-box;
-  border: 1px solid $medium-gray;
-  border-radius: $border-radius;
-  @include transition();
+  border: 1px solid vars.$medium-gray;
+  border-radius: vars.$border-radius;
+  @include mixins.transition();
   
   &:focus {
-    color: $text-color;
-    background-color: $white;
-    border-color: lighten($secondary-blue, 25%);
+    color: vars.$text-color;
+    background-color: vars.$white;
+    border-color: color.adjust(vars.$secondary-blue, $lightness: 25%);
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba($secondary-blue, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(vars.$secondary-blue, 0.25);
   }
   
   &::placeholder {
-    color: $dark-gray;
+    color: vars.$dark-gray;
     opacity: 0.5;
   }
   
   &:disabled,
   &[readonly] {
-    background-color: $light-gray;
+    background-color: vars.$light-gray;
     opacity: 1;
   }
   
@@ -102,20 +106,20 @@ select.form-control {
     margin-top: 0.25em;
     margin-left: -1.75em;
     vertical-align: top;
-    background-color: $white;
+    background-color: vars.$white;
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    border: 1px solid $dark-gray;
+    border: 1px solid vars.$dark-gray;
     appearance: none;
-    @include transition();
+    @include mixins.transition();
     
     &[type="checkbox"] {
       border-radius: 0.25em;
       
       &:checked {
-        background-color: $secondary-blue;
-        border-color: $secondary-blue;
+        background-color: vars.$secondary-blue;
+        border-color: vars.$secondary-blue;
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
       }
     }
@@ -124,15 +128,15 @@ select.form-control {
       border-radius: 50%;
       
       &:checked {
-        background-color: $secondary-blue;
-        border-color: $secondary-blue;
+        background-color: vars.$secondary-blue;
+        border-color: vars.$secondary-blue;
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
       }
     }
     
     &:focus {
-      box-shadow: 0 0 0 0.25rem rgba($secondary-blue, 0.25);
-      border-color: lighten($secondary-blue, 25%);
+      box-shadow: 0 0 0 0.25rem rgba(vars.$secondary-blue, 0.25);
+      border-color: color.adjust(vars.$secondary-blue, $lightness: 25%);
     }
   }
   
@@ -186,9 +190,9 @@ select.form-control {
 // Contact form styling
 .contact-form {
   padding: 2rem;
-  background-color: $white;
-  border-radius: $border-radius-lg;
-  @include box-shadow(0 5px 20px rgba($primary-blue, 0.05));
+  background-color: vars.$white;
+  border-radius: vars.$border-radius-lg;
+  @include mixins.box-shadow(0 5px 20px rgba(vars.$primary-blue, 0.05));
   
   .form-title {
     margin-bottom: 1.5rem;
@@ -196,12 +200,12 @@ select.form-control {
     
     h3 {
       font-size: 1.75rem;
-      color: $primary-blue;
+      color: vars.$primary-blue;
       margin-bottom: 0.5rem;
     }
     
     p {
-      color: $dark-gray;
+      color: vars.$dark-gray;
     }
   }
   
@@ -230,7 +234,7 @@ select.form-control {
     top: 0;
     right: 0;
     height: 100%;
-    border-radius: 0 $border-radius $border-radius 0;
+    border-radius: 0 vars.$border-radius vars.$border-radius 0;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
@@ -250,7 +254,7 @@ select.form-control {
     left: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: $dark-gray;
+    color: vars.$dark-gray;
     font-size: 1.25rem;
   }
 } 

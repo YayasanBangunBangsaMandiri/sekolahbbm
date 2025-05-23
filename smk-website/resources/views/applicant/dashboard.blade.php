@@ -96,7 +96,7 @@
                                     </p>
                                 </div>
                                 <div class="mt-4">
-                                    <a href="#" class="text-sm font-medium text-green-600 hover:text-green-500">
+                                    <a href="{{ route('applicant.download-acceptance-letter') }}" class="text-sm font-medium text-green-600 hover:text-green-500">
                                         Download Acceptance Letter <span aria-hidden="true">&rarr;</span>
                                     </a>
                                 </div>

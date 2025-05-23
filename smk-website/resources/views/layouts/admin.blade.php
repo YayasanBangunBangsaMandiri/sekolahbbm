@@ -30,7 +30,8 @@
                     </div>
                 </div>
 
-                <nav class="mt-10" x-data="{ dashboardOpen: false, contentOpen: false, usersOpen: false }">
+                <nav class="mt-10" x-data="{ dashboardOpen: false, contentOpen: false, registrationOpen: false, usersOpen: false }">
+                    <!-- Dashboard -->
                     <a class="flex items-center mt-4 py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.dashboard') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('admin.dashboard') }}">
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
@@ -69,29 +70,53 @@
                     </div>
 
                     <!-- Registrations -->
-                    <a class="flex items-center mt-4 py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.registrations.*') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('admin.registrations.index') }}">
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                        </svg>
-                        <span class="mx-3">Pendaftaran</span>
-                    </a>
+                    <div class="mt-4">
+                        <button @click="registrationOpen = !registrationOpen" class="flex w-full items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.registrations.*') || request()->routeIs('admin.letter-settings.*') ? 'bg-blue-800 bg-opacity-50' : '' }}">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                            <span class="mx-3">Pendaftaran</span>
+                            <span class="ml-auto">
+                                <svg class="h-4 w-4 transition-transform" :class="{'rotate-180': registrationOpen}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div x-show="registrationOpen" x-transition class="pl-10">
+                            <a class="flex items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.registrations.*') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('admin.registrations.index') }}">
+                                <span class="mx-3">Data Pendaftar</span>
+                            </a>
+                            <a class="flex items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.letter-settings.*') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('admin.letter-settings.edit') }}">
+                                <span class="mx-3">Pengaturan Surat</span>
+                            </a>
+                        </div>
+                    </div>
 
                     <!-- User Management -->
-                    <a class="flex items-center mt-4 py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.users.*') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('admin.users.index') }}">
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                        <span class="mx-3">Pengguna</span>
-                    </a>
-
-                    <!-- Profile Settings -->
-                    <a class="flex items-center mt-4 py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('profile.edit') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('profile.edit') }}">
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span class="mx-3">Pengaturan Profil</span>
-                    </a>
+                    <div class="mt-4">
+                        <button @click="usersOpen = !usersOpen" class="flex w-full items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.users.*') || request()->routeIs('admin.contacts.*') ? 'bg-blue-800 bg-opacity-50' : '' }}">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                            <span class="mx-3">Admin</span>
+                            <span class="ml-auto">
+                                <svg class="h-4 w-4 transition-transform" :class="{'rotate-180': usersOpen}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div x-show="usersOpen" x-transition class="pl-10">
+                            <a class="flex items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.users.*') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('admin.users.index') }}">
+                                <span class="mx-3">Pengguna</span>
+                            </a>
+                            <a class="flex items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.contacts.*') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('admin.contacts.index') }}">
+                                <span class="mx-3">Kontak Masuk</span>
+                            </a>
+                            <a class="flex items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('profile.edit') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('profile.edit') }}">
+                                <span class="mx-3">Pengaturan Profil</span>
+                            </a>
+                        </div>
+                    </div>
 
                     <!-- Logout -->
                     <form method="POST" action="{{ route('logout') }}">

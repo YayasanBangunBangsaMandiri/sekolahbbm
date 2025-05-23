@@ -1,4 +1,8 @@
 // Reset styles
+@use '../utils/variables';
+@use '../utils/mixins';
+@use 'sass:color';
+
 *, 
 *::before, 
 *::after {
@@ -15,12 +19,12 @@ html {
 
 body {
   margin: 0;
-  font-family: $font-secondary;
-  font-size: $font-size-base;
+  font-family: variables.$font-secondary;
+  font-size: variables.$font-size-base;
   font-weight: 400;
-  line-height: $line-height-base;
-  color: $text-color;
-  background-color: $white;
+  line-height: variables.$line-height-base;
+  color: variables.$text-color;
+  background-color: variables.$white;
   text-align: left;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -41,16 +45,16 @@ hr {
   overflow: visible;
   margin: spacing(4) 0;
   border: 0;
-  border-top: 1px solid $medium-gray;
+  border-top: 1px solid variables.$medium-gray;
 }
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   margin-bottom: spacing(3);
-  font-family: $font-primary;
+  font-family: variables.$font-primary;
   font-weight: 700;
   line-height: 1.2;
-  color: $primary-blue;
+  color: variables.$primary-blue;
 }
 
 p {
@@ -119,13 +123,13 @@ sup {
 }
 
 a {
-  color: $secondary-blue;
+  color: variables.$secondary-blue;
   text-decoration: none;
   background-color: transparent;
-  @include transition(color);
+  @include mixins.transition(color);
   
   &:hover {
-    color: darken($secondary-blue, 15%);
+    color: color.adjust(variables.$secondary-blue, $lightness: -15%);
     text-decoration: underline;
   }
 }
@@ -170,7 +174,7 @@ table {
 caption {
   padding-top: spacing(2);
   padding-bottom: spacing(2);
-  color: $dark-gray;
+  color: variables.$dark-gray;
   text-align: left;
   caption-side: bottom;
 }

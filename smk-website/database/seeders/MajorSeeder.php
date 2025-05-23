@@ -17,32 +17,22 @@ class MajorSeeder extends Seeder
             [
                 'name' => 'Teknik Komputer dan Jaringan',
                 'code' => 'TKJ',
-                'description' => 'Jurusan yang mempelajari tentang teknologi komputer dan jaringan.',
-                'icon' => 'fas fa-network-wired',
-            ],
-            [
-                'name' => 'Multimedia',
-                'code' => 'MM',
-                'description' => 'Jurusan yang mempelajari tentang desain grafis, animasi, dan multimedia.',
-                'icon' => 'fas fa-photo-video',
+                'description' => 'Program keahlian yang mempelajari tentang komputer dan jaringan komputer',
             ],
             [
                 'name' => 'Rekayasa Perangkat Lunak',
                 'code' => 'RPL',
-                'description' => 'Jurusan yang mempelajari tentang pengembangan software dan aplikasi.',
-                'icon' => 'fas fa-laptop-code',
+                'description' => 'Program keahlian yang mempelajari tentang pembuatan software',
             ],
             [
-                'name' => 'Akuntansi',
-                'code' => 'AKT',
-                'description' => 'Jurusan yang mempelajari tentang keuangan dan akuntansi.',
-                'icon' => 'fas fa-calculator',
+                'name' => 'Multimedia',
+                'code' => 'MM',
+                'description' => 'Program keahlian yang mempelajari tentang desain grafis dan multimedia',
             ],
             [
-                'name' => 'Administrasi Perkantoran',
-                'code' => 'AP',
-                'description' => 'Jurusan yang mempelajari tentang administrasi dan manajemen perkantoran.',
-                'icon' => 'fas fa-briefcase',
+                'name' => 'Teknik Elektronika Industri',
+                'code' => 'TEI',
+                'description' => 'Program keahlian yang mempelajari tentang elektronika industri',
             ],
         ];
 

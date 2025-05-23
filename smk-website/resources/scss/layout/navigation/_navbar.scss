@@ -1,0 +1,139 @@
+@use '../../utils/variables' as vars;
+@use '../../utils/mixins' as mixins;
+
+.navbar {
+    display: flex;
+    align-items: center;
+  
+    // Main navigation
+    .navbar-nav {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+  
+      @include mixins.mobile {
+        display: none;
+      }
+  
+      > li {
+        position: relative;
+        margin-left: 1.5rem;
+        display: flex;
+        align-items: center;
+        height: 100%;
+  
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+  
+      .navbar-link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 0.5rem;
+        font-weight: 600;
+        color: vars.$primary-blue;
+        text-decoration: none;
+        @include mixins.transition();
+  
+        &:hover {
+          color: vars.$secondary-blue;
+        }
+  
+        &.active {
+          color: vars.$secondary-blue;
+  
+          &:after {
+            width: 100%;
+          }
+        }
+  
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background-color: vars.$secondary-blue;
+          @include mixins.transition();
+        }
+  
+        &:hover:after {
+          width: 100%;
+        }
+  
+        // Indicator for dropdown
+        &.has-dropdown {
+          padding-right: 1.25rem;
+  
+          &:before {
+            content: '\25BC'; // downward triangle
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.5rem;
+            color: inherit;
+            transition: transform 0.3s ease;
+          }
+  
+          &:hover:before {
+            transform: translateY(-50%) rotate(180deg);
+          }
+        }
+      }
+  
+      li:hover .dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+    }
+  
+    // Mobile navigation toggle button
+    .navbar-toggle {
+      display: none;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      outline: none;
+  
+      @include mixins.mobile {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+      }
+  
+      span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: vars.$primary-blue;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+  
+      &.active {
+        span:nth-child(1) {
+          transform: translateY(9px) rotate(45deg);
+        }
+  
+        span:nth-child(2) {
+          opacity: 0;
+        }
+  
+        span:nth-child(3) {
+          transform: translateY(-9px) rotate(-45deg);
+        }
+      }
+    }
+  }
+  

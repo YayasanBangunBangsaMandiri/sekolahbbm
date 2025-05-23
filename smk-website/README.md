@@ -112,3 +112,7 @@ php artisan serve
 ## License
 
 This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Admin Access
+Email: admin@smk.sch.id
+Password: password

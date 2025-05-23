@@ -1,4 +1,12 @@
-// Button styles
+@use '../utils/variables' as vars;
+@use '../utils/mixins' as mixins;
+@use 'sass:color';
+
+// _buttons.scss
+// ========================
+// Button base styles
+// ========================
+
 .btn {
   display: inline-block;
   font-weight: 600;
@@ -10,174 +18,282 @@
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   line-height: 1.5;
-  border-radius: $border-radius;
+  border-radius: vars.$border-radius;
   cursor: pointer;
-  @include transition();
-  
-  &:focus, &:hover {
+  @include mixins.transition();
+
+  &:focus,
+  &:hover {
     text-decoration: none;
     outline: 0;
   }
-  
+
   &:disabled {
     opacity: 0.65;
     pointer-events: none;
   }
 }
 
-// Button variants
+// ========================
+// Button variants with mixin
+// ========================
+
+// Assuming you have this mixin somewhere:
+// @mixin button-style($bg, $color, $hover-bg) {
+//   background-color: $bg;
+//   color: $color;
+//   border-color: $bg;
+//   &:hover, &:focus {
+//     background-color: $hover-bg;
+//     border-color: $hover-bg;
+//     color: $color;
+//   }
+// }
+
 .btn-primary {
-  @include button-style($primary-blue, $white, darken($primary-blue, 10%));
+  @include mixins.button-style(vars.$primary-blue, vars.$white, color.adjust(vars.$primary-blue, $lightness: -10%));
 }
 
 .btn-secondary {
-  @include button-style($secondary-blue, $white, darken($secondary-blue, 10%));
+  @include mixins.button-style(vars.$secondary-blue, vars.$white, color.adjust(vars.$secondary-blue, $lightness: -10%));
 }
 
 .btn-accent {
-  @include button-style($accent-gold, $primary-blue, darken($accent-gold, 10%));
+  @include mixins.button-style(vars.$accent-gold, vars.$primary-blue, color.adjust(vars.$accent-gold, $lightness: -10%));
 }
 
 .btn-white {
-  @include button-style($white, $primary-blue, darken($white, 10%));
+  @include mixins.button-style(vars.$white, vars.$primary-blue, color.adjust(vars.$white, $lightness: -10%));
 }
 
 .btn-light {
-  @include button-style($light-gray, $primary-blue, darken($light-gray, 10%));
+  @include mixins.button-style(vars.$light-gray, vars.$primary-blue, color.adjust(vars.$light-gray, $lightness: -10%));
 }
 
 .btn-dark {
-  @include button-style($primary-blue, $white, lighten($primary-blue, 10%));
+  @include mixins.button-style(vars.$primary-blue, vars.$white, color.adjust(vars.$primary-blue, $lightness: 10%));
 }
 
-// Outline buttons
+// ========================
+// Outline button variants
+// ========================
+
 .btn-outline-primary {
-  color: $primary-blue;
+  color: vars.$primary-blue;
   background-color: transparent;
-  border-color: $primary-blue;
-  
-  &:hover, &:focus {
-    color: $white;
-    background-color: $primary-blue;
-    border-color: $primary-blue;
+  border-color: vars.$primary-blue;
+
+  &:hover,
+  &:focus {
+    color: vars.$white;
+    background-color: vars.$primary-blue;
+    border-color: vars.$primary-blue;
   }
 }
 
 .btn-outline-secondary {
-  color: $secondary-blue;
+  color: vars.$secondary-blue;
   background-color: transparent;
-  border-color: $secondary-blue;
-  
-  &:hover, &:focus {
-    color: $white;
-    background-color: $secondary-blue;
-    border-color: $secondary-blue;
+  border-color: vars.$secondary-blue;
+
+  &:hover,
+  &:focus {
+    color: vars.$white;
+    background-color: vars.$secondary-blue;
+    border-color: vars.$secondary-blue;
   }
 }
 
 .btn-outline-accent {
-  color: $accent-gold;
+  color: vars.$accent-gold;
   background-color: transparent;
-  border-color: $accent-gold;
-  
-  &:hover, &:focus {
-    color: $primary-blue;
-    background-color: $accent-gold;
-    border-color: $accent-gold;
+  border-color: vars.$accent-gold;
+
+  &:hover,
+  &:focus {
+    color: vars.$primary-blue;
+    background-color: vars.$accent-gold;
+    border-color: vars.$accent-gold;
   }
 }
 
 .btn-outline-white {
-  color: $white;
+  color: vars.$white;
   background-color: transparent;
-  border-color: $white;
-  
-  &:hover, &:focus {
-    color: $primary-blue;
-    background-color: $white;
-    border-color: $white;
+  border-color: vars.$white;
+
+  &:hover,
+  &:focus {
+    color: vars.$primary-blue;
+    background-color: vars.$white;
+    border-color: vars.$white;
   }
 }
 
+// ========================
 // Button sizes
+// ========================
+
 .btn-lg {
   padding: 1rem 2rem;
   font-size: 1.25rem;
-  border-radius: $border-radius-lg;
+  border-radius: vars.$border-radius-lg;
 }
 
 .btn-sm {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
-  border-radius: $border-radius-sm;
+  border-radius: vars.$border-radius-sm;
 }
 
+// ========================
 // Special buttons
+// ========================
+
 .btn-link {
   font-weight: 500;
-  color: $secondary-blue;
+  color: vars.$secondary-blue;
   background-color: transparent;
   padding: 0;
   border: 0;
   text-decoration: none;
-  
+
   &:hover {
-    color: darken($secondary-blue, 15%);
+    color: color.adjust(vars.$secondary-blue, $lightness: -15%);
     text-decoration: underline;
   }
-  
+
   &:focus {
     text-decoration: underline;
   }
 }
 
-// Button block
 .btn-block {
   display: block;
   width: 100%;
-  
+
   + .btn-block {
     margin-top: 0.5rem;
   }
 }
 
+// ========================
 // Button group
+// ========================
+
 .btn-group {
   position: relative;
   display: inline-flex;
   vertical-align: middle;
-  
+
   .btn {
     position: relative;
     flex: 1 1 auto;
-    
+
     &:hover {
       z-index: 1;
     }
-    
+
     &:focus {
       z-index: 2;
     }
-    
+
     &:active {
       z-index: 3;
     }
   }
-  
+
   > .btn:not(:first-child) {
     margin-left: -2px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
-  
+
   > .btn:not(:last-child) {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
 }
 
+// ========================
 // Animated buttons
+// ========================
+
 .btn-animated {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    z-index: -1;
+    @include mixins.transition(all 0.6s ease);
+  }
+
+  &:hover:before {
+    left: 100%;
+  }
+}
+
+// ========================
+// Button with arrow
+// ========================
+
+.btn-arrow {
+  position: relative;
+  padding-right: 3rem;
+
+  &::after {
+    content: '\2192'; // Unicode right arrow →
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    @include mixins.transition(transform 0.3s ease);
+  }
+
+  &:hover::after {
+    transform: translate(5px, -50%);
+  }
+}
+
+// ========================
+// Call to action button (CTA)
+// ========================
+
+.btn-cta {
+  padding: 0.875rem 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background-color: vars.$accent-gold;
+  color: vars.$primary-blue;
+  border: 2px solid vars.$accent-gold;
+  box-shadow: 0 4px 10px rgba(vars.$accent-gold, 0.4);
+  cursor: pointer;
+  @include mixins.transition();
+
+  &:hover,
+  &:focus {
+    background-color: color.adjust(vars.$accent-gold, $lightness: -10%);
+    border-color: color.adjust(vars.$accent-gold, $lightness: -10%);
+    box-shadow: 0 6px 15px rgba(vars.$accent-gold, 0.5);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Button with hover effect
+.btn-hover {
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -189,54 +305,13 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.2);
+    background-color: color.adjust(vars.$accent-gold, $lightness: -10%);
+    border-color: color.adjust(vars.$accent-gold, $lightness: -10%);
     z-index: -1;
-    @include transition(all 0.6s ease);
+    @include mixins.transition(all 0.3s ease);
   }
   
   &:hover:before {
-    left: 100%;
+    left: 0;
   }
 }
-
-// Button with arrow
-.btn-arrow {
-  position: relative;
-  padding-right: 3rem;
-  
-  &::after {
-    content: '\2192'; // Right arrow
-    position: absolute;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    @include transition(transform 0.3s ease);
-  }
-  
-  &:hover::after {
-    transform: translate(5px, -50%);
-  }
-}
-
-// Call to action button
-.btn-cta {
-  padding: 0.875rem 2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  background-color: $accent-gold;
-  color: $primary-blue;
-  border: 2px solid $accent-gold;
-  box-shadow: 0 4px 10px rgba($accent-gold, 0.4);
-  
-  &:hover, &:focus {
-    background-color: darken($accent-gold, 10%);
-    border-color: darken($accent-gold, 10%);
-    box-shadow: 0 6px 15px rgba($accent-gold, 0.5);
-    transform: translateY(-2px);
-  }
-  
-  &:active {
-    transform: translateY(0);
-  }
-} 

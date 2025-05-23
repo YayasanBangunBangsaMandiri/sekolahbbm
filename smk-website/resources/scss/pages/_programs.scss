@@ -1,10 +1,14 @@
+@use 'sass:color';
+@use '../utils/variables' as vars;
+@use '../utils/mixins' as mixins;
+
 // Programs page styles
 // Programs hero section
 .programs-hero {
   position: relative;
   height: 60vh;
   min-height: 500px;
-  background-color: $primary-blue;
+  background-color: vars.$primary-blue;
   background-size: cover;
   background-position: center;
   
@@ -15,7 +19,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, rgba($primary-blue, 0.8) 0%, rgba($primary-blue, 0.5) 100%);
+    background: linear-gradient(to right, rgba(vars.$primary-blue, 0.8) 0%, rgba(vars.$primary-blue, 0.5) 100%);
   }
   
   .container {
@@ -32,20 +36,20 @@
     
     h1 {
       font-size: 3rem;
-      color: $white;
+      color: vars.$white;
       margin-bottom: 1.5rem;
       
-      @include mobile {
+      @include mixins.mobile {
         font-size: 2.25rem;
       }
     }
     
     p {
       font-size: 1.25rem;
-      color: rgba($white, 0.9);
+      color: rgba(vars.$white, 0.9);
       margin-bottom: 2rem;
       
-      @include mobile {
+      @include mixins.mobile {
         font-size: 1.1rem;
       }
     }
@@ -69,7 +73,7 @@
       font-size: 1.125rem;
       max-width: 700px;
       margin: 0 auto;
-      color: $dark-gray;
+      color: vars.$dark-gray;
     }
   }
   
@@ -82,23 +86,23 @@
     .category-tab {
       padding: 1rem 2rem;
       margin: 0 0.5rem 1rem;
-      background-color: $light-gray;
-      color: $primary-blue;
+      background-color: vars.$light-gray;
+      color: vars.$primary-blue;
       font-weight: 600;
-      border-radius: $border-radius;
+      border-radius: vars.$border-radius;
       cursor: pointer;
       transition: all 0.3s ease;
       
       &:hover {
-        background-color: rgba($secondary-blue, 0.1);
+        background-color: rgba(vars.$secondary-blue, 0.1);
       }
       
       &.active {
-        background-color: $secondary-blue;
-        color: $white;
+        background-color: vars.$secondary-blue;
+        color: vars.$white;
       }
       
-      @include mobile {
+      @include mixins.mobile {
         padding: 0.75rem 1rem;
         margin: 0 0.25rem 0.5rem;
         font-size: 0.9rem;
@@ -111,11 +115,11 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     
-    @include respond-to(md) {
+    @include mixins.respond-to(md) {
       grid-template-columns: repeat(2, 1fr);
     }
     
-    @include mobile {
+    @include mixins.mobile {
       grid-template-columns: 1fr;
     }
   }
@@ -123,8 +127,8 @@
 
 // Program card
 .program-card {
-  background-color: $white;
-  border-radius: $border-radius-lg;
+  background-color: vars.$white;
+  border-radius: vars.$border-radius-lg;
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
@@ -155,13 +159,18 @@
     top: 1rem;
     left: 1rem;
     padding: 0.5rem 1rem;
-    background-color: $accent-gold;
-    color: $primary-blue;
+    background-color: vars.$accent-gold;
+    color: vars.$primary-blue;
     font-weight: 600;
     font-size: 0.8rem;
-    border-radius: $border-radius;
+    border-radius: vars.$border-radius;
     text-transform: uppercase;
     letter-spacing: 1px;
+    display: none;
+  }
+  
+  &:hover .program-badge {
+    display: inline-block;
   }
   
   .program-content {
@@ -172,12 +181,12 @@
       margin-bottom: 1rem;
       
       a {
-        color: $primary-blue;
+        color: vars.$primary-blue;
         text-decoration: none;
         transition: all 0.3s ease;
         
         &:hover {
-          color: $secondary-blue;
+          color: vars.$secondary-blue;
         }
       }
     }
@@ -191,10 +200,10 @@
         align-items: center;
         margin-right: 1.5rem;
         font-size: 0.9rem;
-        color: $dark-gray;
+        color: vars.$dark-gray;
         
         i {
-          color: $secondary-blue;
+          color: vars.$secondary-blue;
           margin-right: 0.5rem;
           font-size: 1rem;
         }
@@ -202,7 +211,7 @@
     }
     
     .program-text {
-      color: $dark-gray;
+      color: vars.$dark-gray;
       margin-bottom: 1.5rem;
       line-height: 1.6;
     }
@@ -212,20 +221,20 @@
       justify-content: space-between;
       align-items: center;
       padding-top: 1rem;
-      border-top: 1px solid $light-gray;
+      border-top: 1px solid vars.$light-gray;
       
       .program-meta {
         font-size: 0.9rem;
-        color: $dark-gray;
+        color: vars.$dark-gray;
         
         span {
           font-weight: 600;
-          color: $primary-blue;
+          color: vars.$primary-blue;
         }
       }
       
       .btn-text {
-        color: $secondary-blue;
+        color: vars.$secondary-blue;
         font-weight: 600;
         font-size: 0.9rem;
         
@@ -265,10 +274,10 @@
         margin-right: 2rem;
         margin-bottom: 1rem;
         font-size: 1rem;
-        color: $dark-gray;
+        color: vars.$dark-gray;
         
         i {
-          color: $secondary-blue;
+          color: vars.$secondary-blue;
           margin-right: 0.5rem;
           font-size: 1.1rem;
         }
@@ -276,7 +285,7 @@
     }
     
     .program-image {
-      border-radius: $border-radius-lg;
+      border-radius: vars.$border-radius-lg;
       overflow: hidden;
       height: 450px;
       
@@ -292,7 +301,7 @@
     display: flex;
     gap: 3rem;
     
-    @include mobile {
+    @include mixins.mobile {
       flex-direction: column;
     }
     
@@ -315,14 +324,14 @@
             left: 0;
             width: 50px;
             height: 3px;
-            background-color: $accent-gold;
+            background-color: vars.$accent-gold;
           }
         }
         
         p {
           font-size: 1.05rem;
           line-height: 1.8;
-          color: $dark-gray;
+          color: vars.$dark-gray;
           margin-bottom: 1.5rem;
         }
         
@@ -334,14 +343,14 @@
             padding-left: 1.5rem;
             margin-bottom: 0.75rem;
             font-size: 1.05rem;
-            color: $dark-gray;
+            color: vars.$dark-gray;
             
             &:before {
               content: '\2022'; // Bullet
               position: absolute;
               left: 0;
               top: 0;
-              color: $secondary-blue;
+              color: vars.$secondary-blue;
               font-weight: bold;
             }
           }
@@ -353,8 +362,8 @@
       flex: 1;
       
       .sidebar-widget {
-        background-color: $white;
-        border-radius: $border-radius-lg;
+        background-color: vars.$white;
+        border-radius: vars.$border-radius-lg;
         padding: 1.5rem;
         margin-bottom: 2rem;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
@@ -372,7 +381,7 @@
             left: 0;
             width: 40px;
             height: 3px;
-            background-color: $accent-gold;
+            background-color: vars.$accent-gold;
           }
         }
         
@@ -385,7 +394,7 @@
             display: flex;
             justify-content: space-between;
             padding: 1rem 0;
-            border-bottom: 1px solid $light-gray;
+            border-bottom: 1px solid vars.$light-gray;
             
             &:last-child {
               border-bottom: 0;
@@ -394,11 +403,11 @@
             
             span:first-child {
               font-weight: 600;
-              color: $primary-blue;
+              color: vars.$primary-blue;
             }
             
             span:last-child {
-              color: $dark-gray;
+              color: vars.$dark-gray;
             }
           }
         }
@@ -419,7 +428,7 @@
 // Related programs
 .related-programs {
   padding: 5rem 0;
-  background-color: $light-gray;
+  background-color: vars.$light-gray;
   
   .section-title {
     text-align: center;

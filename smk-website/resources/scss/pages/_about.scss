@@ -1,23 +1,28 @@
-// About page styles
+@use 'sass:color';
+@use '../utils/variables' as vars;
+@use '../utils/mixins' as mixins;
+
 // About hero section
 .about-hero {
   position: relative;
   height: 60vh;
   min-height: 500px;
-  background-color: $primary-blue;
+  background-color: vars.$primary-blue;
   background-size: cover;
   background-position: center center;
-  
+
   &:before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, rgba($primary-blue, 0.8) 0%, rgba($primary-blue, 0.5) 100%);
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(
+      to right,
+      color.change(vars.$primary-blue, $alpha: 0.8) 0%,
+      color.change(vars.$primary-blue, $alpha: 0.5) 100%
+    );
   }
-  
+
   .container {
     position: relative;
     z-index: 10;
@@ -26,26 +31,26 @@
     flex-direction: column;
     justify-content: center;
   }
-  
+
   .about-hero-content {
     max-width: 650px;
-    
+
     h1 {
       font-size: 3rem;
-      color: $white;
+      color: vars.$white;
       margin-bottom: 1.5rem;
-      
-      @include mobile {
+
+      @include mixins.mobile {
         font-size: 2.25rem;
       }
     }
-    
+
     p {
       font-size: 1.25rem;
-      color: rgba($white, 0.9);
+      color: rgba(vars.$white, 0.9);
       margin-bottom: 2rem;
-      
-      @include mobile {
+
+      @include mixins.mobile {
         font-size: 1.1rem;
       }
     }
@@ -55,34 +60,34 @@
 // About intro section
 .about-intro {
   padding: 5rem 0;
-  
+
   .about-intro-content {
     display: flex;
     align-items: center;
     gap: 4rem;
-    
-    @include mobile {
+
+    @include mixins.mobile {
       flex-direction: column;
       gap: 2rem;
     }
-    
+
     .about-intro-text {
       flex: 1;
-      
+
       .section-subtitle {
-        color: $secondary-blue;
+        color: vars.$secondary-blue;
         font-size: 1.1rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 2px;
         margin-bottom: 1rem;
       }
-      
+
       h2 {
         font-size: 2.5rem;
         margin-bottom: 1.5rem;
         position: relative;
-        
+
         &:after {
           content: '';
           position: absolute;
@@ -90,46 +95,46 @@
           left: 0;
           width: 50px;
           height: 3px;
-          background-color: $accent-gold;
+          background-color: vars.$accent-gold;
         }
       }
-      
+
       p {
         font-size: 1.1rem;
         line-height: 1.8;
-        color: $dark-gray;
+        color: vars.$dark-gray;
         margin-bottom: 1.5rem;
       }
     }
-    
+
     .about-intro-image {
       flex: 1;
       position: relative;
-      
+
       img {
-        border-radius: $border-radius-lg;
+        border-radius: vars.$border-radius-lg;
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         width: 100%;
       }
-      
+
       .experience-badge {
         position: absolute;
         bottom: -20px;
         right: 20px;
-        background-color: $accent-gold;
-        color: $primary-blue;
+        background-color: vars.$accent-gold;
+        color: vars.$primary-blue;
         padding: 1.5rem;
-        border-radius: $border-radius;
+        border-radius: vars.$border-radius;
         text-align: center;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        
+
         .years {
           font-size: 2.5rem;
           font-weight: 700;
           line-height: 1;
           margin-bottom: 0.5rem;
         }
-        
+
         .text {
           font-weight: 600;
           font-size: 0.9rem;
@@ -141,27 +146,27 @@
   }
 }
 
-// Our mission section
+// Mission section
 .mission-section {
   padding: 5rem 0;
-  background-color: $light-gray;
-  
+  background-color: vars.$light-gray;
+
   .mission-wrapper {
     display: flex;
     gap: 3rem;
-    
-    @include mobile {
+
+    @include mixins.mobile {
       flex-direction: column;
     }
-    
+
     .mission-content {
       flex: 1;
-      
+
       h2 {
         font-size: 2.25rem;
         margin-bottom: 1.5rem;
         position: relative;
-        
+
         &:after {
           content: '';
           position: absolute;
@@ -169,47 +174,38 @@
           left: 0;
           width: 50px;
           height: 3px;
-          background-color: $accent-gold;
+          background-color: vars.$accent-gold;
         }
       }
-      
+
       p {
         font-size: 1.1rem;
         line-height: 1.8;
-        color: $dark-gray;
+        color: vars.$dark-gray;
         margin-bottom: 2rem;
       }
-      
+
       .mission-list {
         list-style: none;
         padding: 0;
         margin: 0 0 2rem;
-        
+
         li {
           position: relative;
           padding-left: 2rem;
           margin-bottom: 1rem;
           font-size: 1.05rem;
-          color: $primary-blue;
-          
+          color: vars.$primary-blue;
+
           &:before {
             content: '\2713'; // Checkmark
             position: absolute;
             left: 0;
             top: 0;
-            color: $secondary-blue;
+            color: vars.$accent-gold;
             font-weight: bold;
           }
         }
-      }
-    }
-    
-    .mission-image {
-      flex: 1;
-      
-      img {
-        border-radius: $border-radius-lg;
-        width: 100%;
       }
     }
   }
@@ -218,55 +214,55 @@
 // Values section
 .values-section {
   padding: 5rem 0;
-  
+
   .section-title {
     text-align: center;
     margin-bottom: 3rem;
-    
+
     h2 {
       font-size: 2.5rem;
       margin-bottom: 1rem;
     }
-    
+
     p {
       font-size: 1.125rem;
       max-width: 700px;
       margin: 0 auto;
-      color: $dark-gray;
+      color: vars.$dark-gray;
     }
   }
-  
+
   .values-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    
-    @include respond-to(md) {
+
+    @include mixins.respond-to(md) {
       grid-template-columns: repeat(2, 1fr);
     }
-    
-    @include mobile {
+
+    @include mixins.mobile {
       grid-template-columns: 1fr;
     }
-    
+
     .value-card {
-      background-color: $white;
-      border-radius: $border-radius-lg;
+      background-color: vars.$white;
+      border-radius: vars.$border-radius-lg;
       padding: 2rem;
       text-align: center;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
       transition: all 0.3s ease;
-      
+
       &:hover {
         transform: translateY(-10px);
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        
+
         .value-icon {
-          background-color: $accent-gold;
-          color: $primary-blue;
+          background-color: vars.$accent-gold;
+          color: vars.$primary-blue;
         }
       }
-      
+
       .value-icon {
         width: 80px;
         height: 80px;
@@ -274,20 +270,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: rgba($secondary-blue, 0.1);
-        color: $secondary-blue;
+        background-color: rgba(vars.$secondary-blue, 0.1);
+        color: vars.$secondary-blue;
         font-size: 2rem;
         border-radius: 50%;
         transition: all 0.3s ease;
       }
-      
+
       h3 {
         font-size: 1.5rem;
         margin-bottom: 1rem;
       }
-      
+
       p {
-        color: $dark-gray;
+        color: vars.$dark-gray;
         line-height: 1.6;
       }
     }
@@ -297,27 +293,27 @@
 // Team section
 .team-section {
   padding: 5rem 0;
-  background-color: $light-gray;
-  
+  background-color: vars.$light-gray;
+
   .section-title {
     text-align: center;
     margin-bottom: 3rem;
   }
-  
+
   .team-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
-    
-    @include respond-to(lg) {
+
+    @include mixins.respond-to(lg) {
       grid-template-columns: repeat(3, 1fr);
     }
-    
-    @include respond-to(md) {
+
+    @include mixins.respond-to(md) {
       grid-template-columns: repeat(2, 1fr);
     }
-    
-    @include mobile {
+
+    @include mixins.mobile {
       grid-template-columns: 1fr;
     }
   }
@@ -326,37 +322,37 @@
 // Achievements section
 .achievements-section {
   padding: 5rem 0;
-  background-color: $primary-blue;
-  color: $white;
-  
+  background-color: vars.$primary-blue;
+  color: vars.$white;
+
   .achievement-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
-    
-    @include respond-to(md) {
+
+    @include mixins.respond-to(md) {
       grid-template-columns: repeat(2, 1fr);
     }
-    
-    @include mobile {
+
+    @include mixins.mobile {
       grid-template-columns: 1fr;
     }
-    
+
     .achievement-item {
       text-align: center;
-      
+
       .achievement-number {
         font-size: 3.5rem;
         font-weight: 700;
-        color: $accent-gold;
+        color: vars.$accent-gold;
         margin-bottom: 1rem;
         line-height: 1;
       }
-      
+
       .achievement-text {
         font-size: 1.1rem;
         font-weight: 500;
-        color: rgba($white, 0.9);
+        color: rgba(vars.$white, 0.9);
         text-transform: uppercase;
         letter-spacing: 1px;
       }
@@ -367,30 +363,30 @@
 // Partners section
 .partners-section {
   padding: 5rem 0;
-  
+
   .section-title {
     text-align: center;
     margin-bottom: 3rem;
   }
-  
+
   .partners-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 30px;
     align-items: center;
-    
-    @include respond-to(md) {
+
+    @include mixins.respond-to(md) {
       grid-template-columns: repeat(3, 1fr);
     }
-    
-    @include mobile {
+
+    @include mixins.mobile {
       grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .partner-item {
       padding: 1.5rem;
       text-align: center;
-      
+
       img {
         max-width: 100%;
         height: auto;
@@ -399,11 +395,11 @@
         opacity: 0.7;
         transition: all 0.3s ease;
       }
-      
+
       &:hover img {
         filter: grayscale(0);
         opacity: 1;
       }
     }
   }
-} 
+}

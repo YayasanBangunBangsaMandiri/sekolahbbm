@@ -1,33 +1,37 @@
+@use 'variables' as vars;
+@use 'sass:math';
+@use 'sass:color';
+
 // Responsive breakpoints
 @mixin respond-to($breakpoint) {
   @if $breakpoint == xs {
-    @media (max-width: #{$breakpoint-sm - 1}) { @content; }
+    @media (max-width: #{vars.$breakpoint-sm - 1}) { @content; }
   }
   @else if $breakpoint == sm {
-    @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-md - 1}) { @content; }
+    @media (min-width: #{vars.$breakpoint-sm}) and (max-width: #{vars.$breakpoint-md - 1}) { @content; }
   }
   @else if $breakpoint == md {
-    @media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-lg - 1}) { @content; }
+    @media (min-width: #{vars.$breakpoint-md}) and (max-width: #{vars.$breakpoint-lg - 1}) { @content; }
   }
   @else if $breakpoint == lg {
-    @media (min-width: #{$breakpoint-lg}) and (max-width: #{$breakpoint-xl - 1}) { @content; }
+    @media (min-width: #{vars.$breakpoint-lg}) and (max-width: #{vars.$breakpoint-xl - 1}) { @content; }
   }
   @else if $breakpoint == xl {
-    @media (min-width: #{$breakpoint-xl}) { @content; }
+    @media (min-width: #{vars.$breakpoint-xl}) { @content; }
   }
 }
 
 // Responsive utils
 @mixin mobile {
-  @media (max-width: #{$breakpoint-md - 1}) { @content; }
+  @media (max-width: #{vars.$breakpoint-md - 1}) { @content; }
 }
 
 @mixin tablet-up {
-  @media (min-width: #{$breakpoint-md}) { @content; }
+  @media (min-width: #{vars.$breakpoint-md}) { @content; }
 }
 
 @mixin desktop {
-  @media (min-width: #{$breakpoint-lg}) { @content; }
+  @media (min-width: #{vars.$breakpoint-lg}) { @content; }
 }
 
 // Flexbox utilities
@@ -76,10 +80,10 @@
 
 // Typography
 @mixin heading($size: 'md') {
-  font-family: $font-primary;
+  font-family: vars.$font-primary;
   font-weight: 700;
   line-height: 1.2;
-  color: $primary-blue;
+  color: vars.$primary-blue;
   
   @if $size == 'xs' {
     font-size: 1.25rem;
@@ -99,17 +103,17 @@
 }
 
 @mixin section-padding {
-  padding: map-get($spacers, 6) 0;
+  padding: map-get(vars.$spacers, 6) 0;
   
   @include mobile {
-    padding: map-get($spacers, 5) 0;
+    padding: map-get(vars.$spacers, 5) 0;
   }
 }
 
 // Green School specific mixins
 @mixin section-title {
   @include heading('lg');
-  margin-bottom: map-get($spacers, 4);
+  margin-bottom: map-get(vars.$spacers, 4);
   position: relative;
   
   &:after {
@@ -119,7 +123,7 @@
     bottom: -0.5rem;
     width: 50px;
     height: 3px;
-    background-color: $accent-gold;
+    background-color: vars.$accent-gold;
   }
   
   &.centered {
@@ -143,7 +147,7 @@
 }
 
 // Image overlay
-@mixin image-overlay($opacity: 0.7, $bg-color: $primary-blue) {
+@mixin image-overlay($opacity: 0.7, $bg-color: vars.$primary-blue) {
   position: relative;
   
   &:before {
@@ -166,7 +170,7 @@
 // Grid system
 @mixin make-container() {
   width: 100%;
-  max-width: $container-max-width;
+  max-width: vars.$container-max-width;
   margin-right: auto;
   margin-left: auto;
   padding-right: 15px;
