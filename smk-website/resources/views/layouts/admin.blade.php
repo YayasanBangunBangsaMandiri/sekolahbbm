@@ -89,6 +89,9 @@
                             <a class="flex items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.letter-settings.*') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('admin.letter-settings.edit') }}">
                                 <span class="mx-3">Pengaturan Surat</span>
                             </a>
+                            <a class="flex items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.registration-settings.*') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('admin.registration-settings.edit') }}">
+                                <span class="mx-3">Pengaturan Pendaftaran</span>
+                            </a>
                         </div>
                     </div>
 
@@ -112,7 +115,7 @@
                             <a class="flex items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.contacts.*') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('admin.contacts.index') }}">
                                 <span class="mx-3">Kontak Masuk</span>
                             </a>
-                            <a class="flex items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('profile.edit') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('profile.edit') }}">
+                            <a class="flex items-center py-2 px-6 text-gray-100 hover:bg-blue-800 hover:bg-opacity-50 rounded {{ request()->routeIs('admin.profile.*') ? 'bg-blue-800 bg-opacity-50' : '' }}" href="{{ route('admin.profile.edit') }}">
                                 <span class="mx-3">Pengaturan Profil</span>
                             </a>
                         </div>
@@ -133,7 +136,7 @@
 
             <div class="flex-1 flex flex-col overflow-hidden">
                 <!-- Header -->
-                <header class="flex justify-between items-center py-4 px-6 bg-white border-b-4 border-blue-800">
+                <header class="flex justify-between items-center py-4 px-6 bg-white border-b-4 border-blue-900">
                     <div class="flex items-center">
                         <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
                             <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -153,7 +156,7 @@
                             <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
 
                             <div x-show="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10">
-                                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-700 hover:text-white">Profil</a>
+                                <a href="{{ route('admin.profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-700 hover:text-white">Profil</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-700 hover:text-white">Logout</a>
@@ -162,6 +165,19 @@
                         </div>
                     </div>
                 </header>
+
+                <!-- Flash Messages -->
+                @if (session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        <span class="block sm:inline">{{ session('error') }}</span>
+                    </div>
+                @endif
 
                 <!-- Main Content -->
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">

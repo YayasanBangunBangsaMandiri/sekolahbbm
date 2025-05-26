@@ -63,27 +63,28 @@
             <!-- Gallery Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @foreach($galleries as $gallery)
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <a href="{{ route('gallery.show', $gallery->id) }}" class="block hover:opacity-90 transition-opacity">
-                        <div class="h-56 overflow-hidden">
-                            <img src="{{ asset('storage/' . $gallery->media_url) }}" alt="{{ $gallery->title }}" class="w-full h-full object-cover">
-                        </div>
-                    </a>
-                    <div class="p-4">
-                        <a href="{{ route('gallery.show', $gallery->id) }}" class="block">
-                            <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600">{{ $gallery->title }}</h3>
-                        </a>
-                        <div class="flex items-center mt-2">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                {{ ucfirst($gallery->category) }}
-                            </span>
-                            <span class="text-gray-500 text-sm ml-2">
-                                {{ $gallery->created_at->format('d M Y') }}
-                            </span>
-                        </div>
-                        @if($gallery->description)
-                            <p class="mt-2 text-sm text-gray-500 line-clamp-2">{{ $gallery->description }}</p>
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                    <div class="aspect-w-4 aspect-h-3">
+                        @if($gallery->media_url)
+                            <img src="{{ asset('storage/' . $gallery->media_url) }}" 
+                                 alt="{{ $gallery->title }}" 
+                                 class="w-full h-full object-cover"
+                                 onerror="this.src='{{ asset('images/placeholder.jpg') }}'; this.onerror=null;">
+                        @else
+                            <img src="{{ asset('images/placeholder.jpg') }}" 
+                                 alt="Placeholder" 
+                                 class="w-full h-full object-cover">
                         @endif
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2">{{ $gallery->title }}</h3>
+                        <p class="text-gray-600 text-sm mb-4">{{ $gallery->description }}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">{{ $gallery->created_at->format('d M Y') }}</span>
+                            <a href="{{ route('gallery.show', $gallery->id) }}" class="text-blue-600 hover:text-blue-800">
+                                Lihat Detail
+                            </a>
+                        </div>
                     </div>
                 </div>
                 @endforeach

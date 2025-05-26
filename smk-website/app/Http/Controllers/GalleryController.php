@@ -63,7 +63,13 @@ class GalleryController extends Controller
         ]);
         
         // Upload media
-        $mediaPath = $request->file('media')->store('gallery', 'public');
+        $mediaPath = null;
+        if ($request->hasFile('media')) {
+            $file = $request->file('media');
+            $filename = $file->hashName(); // Gunakan hashName() untuk nama yang unik
+            $file->storeAs('public/gallery', $filename);
+            $mediaPath = 'gallery/' . $filename; // Simpan path lengkap relatif terhadap storage/app/public
+        }
         
         // Tentukan tipe media berdasarkan ekstensi
         $mediaType = 'image'; // Default to image for now
@@ -128,11 +134,14 @@ class GalleryController extends Controller
         if ($request->hasFile('media')) {
             // Hapus file lama
             if ($gallery->media_url) {
-                Storage::disk('public')->delete($gallery->media_url);
+                Storage::delete('public/' . $gallery->media_url);
             }
             
             // Upload file baru
-            $mediaPath = $request->file('media')->store('gallery', 'public');
+            $file = $request->file('media');
+            $filename = $file->hashName();
+            $file->storeAs('public/gallery', $filename);
+            $mediaPath = 'gallery/' . $filename;
         }
         
         $gallery->update([
@@ -155,7 +164,7 @@ class GalleryController extends Controller
         
         // Hapus file media
         if ($gallery->media_url) {
-            Storage::disk('public')->delete($gallery->media_url);
+            Storage::delete('public/' . $gallery->media_url);
         }
         
         $gallery->delete();

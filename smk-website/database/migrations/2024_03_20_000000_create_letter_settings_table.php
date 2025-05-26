@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('letter_settings', function (Blueprint $table) {
             $table->id();
             $table->string('school_name');
-            $table->text('school_address');
+            $table->string('school_address');
             $table->string('school_phone');
             $table->string('school_email');
             $table->string('principal_name');
@@ -25,12 +25,12 @@ return new class extends Migration
             $table->integer('letter_margin_left')->default(20);
             $table->string('paper_size')->default('A4');
             $table->string('paper_orientation')->default('portrait');
-            $table->string('foundation_name')->default('YAYASAN BANGUN BANGSA MANDIRI (YBBM) INDRAMAYU');
-            $table->string('school_name_kop')->default('SMK BANGUN BANGSA MANDIRI KANDANGHAUR');
-            $table->string('school_tagline')->default('SEKOLAH PUSAT KEUNGGULAN');
-            $table->string('school_website')->default('smkbbmindramayu.sch.id');
-            $table->string('school_decree')->default('SK. Kepala Dinas Pendidikan Kab. Indramayu No. 421.5 / Kep. 05 – Disdik/ 2007');
-            $table->string('letter_header_color')->default('#006400');
+            $table->string('foundation_name');
+            $table->string('school_name_kop');
+            $table->string('school_tagline');
+            $table->string('school_website');
+            $table->string('school_decree');
+            $table->string('letter_header_color')->default('#000000');
             $table->timestamps();
         });
     }
@@ -42,4 +42,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('letter_settings');
     }
-};
+}; 

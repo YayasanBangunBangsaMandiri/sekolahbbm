@@ -7,7 +7,7 @@
     <h3 class="text-gray-700 text-3xl font-medium">Pengaturan Surat</h3>
 
     <div class="mt-8">
-        <form method="POST" action="{{ route('admin.letter-settings.update') }}" class="space-y-6">
+        <form method="POST" action="{{ route('admin.letter-settings.update') }}" class="space-y-6" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -15,6 +15,22 @@
             <div class="bg-white shadow rounded-lg p-6 mb-6">
                 <h4 class="text-lg font-medium mb-4">Pengaturan Kop Surat</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Logo Upload -->
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-gray-700">Logo Sekolah</label>
+                        <div class="mt-1 flex items-center">
+                            @if($setting->logo_path)
+                                <div class="mr-4">
+                                    <img src="{{ asset('storage/' . $setting->logo_path) }}" alt="Logo Sekolah" class="h-16 w-auto">
+                                </div>
+                            @endif
+                            <input type="file" name="logo" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        </div>
+                        @error('logo')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Nama Yayasan</label>
                         <input type="text" name="foundation_name" value="{{ old('foundation_name', $setting->foundation_name) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
@@ -41,8 +57,13 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Warna Header</label>
+                        <label class="block text-sm font-medium text-gray-700">Warna Background Header</label>
                         <input type="color" name="letter_header_color" value="{{ old('letter_header_color', $setting->letter_header_color) }}" class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Warna Teks Header</label>
+                        <input type="color" name="header_text_color" value="{{ old('header_text_color', $setting->header_text_color) }}" class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                     </div>
                 </div>
             </div>

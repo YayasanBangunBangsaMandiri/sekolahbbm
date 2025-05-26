@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Registration;
+use App\Models\LetterSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ApplicantDashboardController extends Controller
 {
@@ -120,7 +121,7 @@ class ApplicantDashboardController extends Controller
             return redirect()->route('applicant.login');
         }
         
-        $registration = Registration::find(session('applicant_id'));
+        $registration = Registration::with('major')->find(session('applicant_id'));
         
         if (!$registration || $registration->status !== 'accepted') {
             return redirect()->route('applicant.dashboard')
@@ -128,22 +129,29 @@ class ApplicantDashboardController extends Controller
         }
 
         // Get letter settings
-        $setting = \App\Models\LetterSetting::first();
+        $setting = LetterSetting::first();
         if (!$setting) {
             return redirect()->route('applicant.dashboard')
                            ->with('error', 'Pengaturan surat belum dikonfigurasi.');
         }
 
-        // Generate PDF using view
-        $pdf = PDF::loadView('pdf.acceptance-letter', [
-            'registration' => $registration,
-            'setting' => $setting
-        ]);
+        try {
+            // Generate PDF using view
+            $pdf = Pdf::loadView('pdf.acceptance-letter', [
+                'registration' => $registration,
+                'setting' => $setting,
+                'registrationNumber' => 'REG-' . str_pad($registration->id, 5, '0', STR_PAD_LEFT),
+                'date' => now()->isoFormat('D MMMM Y')
+            ]);
 
-        // Set paper size and orientation
-        $pdf->setPaper($setting->paper_size, $setting->paper_orientation);
+            // Set paper size and orientation
+            $pdf->setPaper($setting->paper_size ?? 'A4', $setting->paper_orientation ?? 'portrait');
 
-        // Return the PDF for download
-        return $pdf->download('surat-penerimaan.pdf');
+            // Return the PDF for download
+            return $pdf->download('surat-penerimaan-' . $registration->student_name . '.pdf');
+        } catch (\Exception $e) {
+            return redirect()->route('applicant.dashboard')
+                           ->with('error', 'Terjadi kesalahan saat mengunduh surat penerimaan. Silakan coba lagi.');
+        }
     }
 }

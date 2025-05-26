@@ -20,6 +20,7 @@
             margin-bottom: 20px;
             border-bottom: 3px double #000;
             padding-bottom: 10px;
+            position: relative;
         }
         .logo {
             width: 80px;
@@ -31,6 +32,7 @@
         .header-text {
             margin-left: 100px;
             margin-right: 30px;
+            color: {{ $setting->header_text_color }};
         }
         .yayasan {
             font-size: 12pt;
@@ -40,7 +42,7 @@
             font-size: 18pt;
             font-weight: bold;
             margin-bottom: 3px;
-            color: #006400;
+            color: {{ $setting->letter_header_color }};
         }
         .sub-name {
             font-size: 14pt;
@@ -69,10 +71,32 @@
         .signature {
             float: right;
             width: 250px;
+            margin-right: 30px;
+        }
+        .signature-date,
+        .signature-title {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        .signature-title {
+            margin-bottom: 60px;
+        }
+        .signature-table {
+            width: 100%;
+            margin: 0 auto;
+        }
+        .signature-table td {
             text-align: center;
         }
-        .signature-content {
+        .principal-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .principal-nip {
             text-align: left;
+            display: block;
+            padding: 5px 0;
         }
         .clear {
             clear: both;
@@ -87,38 +111,32 @@
             font-size: 11pt;
         }
         table.info td:first-child {
-            width: 100px;
+            width: 150px;
         }
         p {
             margin: 5px 0;
-        }
-        .principal-info {
-            margin-top: 10px;
-            text-align: left;
-        }
-        .principal-info p {
-            margin: 0;
-            line-height: 1.3;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <img src="{{ public_path('images/logo.png') }}" alt="Logo Sekolah" class="logo">
+        @if($setting->logo_path)
+            <img src="{{ public_path('storage/' . $setting->logo_path) }}" alt="Logo Sekolah" class="logo">
+        @endif
         <div class="header-text">
-            <div class="yayasan">YAYASAN BANGUN BANGSA MANDIRI (YBBM) INDRAMAYU</div>
-            <div class="school-name">SMK BANGUN BANGSA MANDIRI KANDANGHAUR</div>
-            <div class="sub-name">SEKOLAH PUSAT KEUNGGULAN</div>
+            <div class="yayasan">{{ $setting->foundation_name }}</div>
+            <div class="school-name">{{ $setting->school_name_kop }}</div>
+            <div class="sub-name">{{ $setting->school_tagline }}</div>
             <div class="school-address">
-                Jl. P.U. Kemped No 212 Desa Wirakanan Kecamatan Kandanghaur Kabupaten Indramayu - 45254<br>
-                website: smkbbmindramayu.sch.id | E-Mail: info@smkbbmindramayu.sch.id | Telp. (0234) 505194
+                {{ $setting->school_address }}<br>
+                website: {{ $setting->school_website }} | E-Mail: {{ $setting->school_email }} | Telp. {{ $setting->school_phone }}
             </div>
         </div>
-        <div class="sk-text">SK. Kepala Dinas Pendidikan Kab. Indramayu No. 421.5 / Kep. 05 – Disdik/ 2007</div>
+        <div class="sk-text">{{ $setting->school_decree }}</div>
     </div>
 
     <div class="content">
-        <p>Nomor: {{ str_pad($registration->id, 3, '0', STR_PAD_LEFT) }}/SMK/{{ date('Y') }}</p>
+        <p>Nomor: {{ $registrationNumber }}/SMK/{{ date('Y') }}</p>
         
         <p>Kepada Yth,<br>
         {{ $registration->student_name }}<br>
@@ -132,11 +150,15 @@
         <table class="info">
             <tr>
                 <td>Nama</td>
-                <td>: {{ $registration->student_name }}</td>
+                <td>: {{ ucwords(strtolower($registration->student_name)) }}</td>
             </tr>
             <tr>
                 <td>NISN</td>
                 <td>: {{ $registration->nisn }}</td>
+            </tr>
+            <tr>
+                <td>Tempat, Tgl Lahir</td>
+                <td>: {{ ucwords(strtolower($registration->place_of_birth)) }}, {{ \Carbon\Carbon::parse($registration->birthdate)->isoFormat('D MMMM Y') }}</td>
             </tr>
             <tr>
                 <td>Jurusan</td>
@@ -167,13 +189,16 @@
 
     <div class="footer">
         <div class="signature">
-            <p>{{ date('d F Y') }}</p>
-            <p>Kepala Sekolah,</p>
-            <br><br><br>
-            <div class="principal-info">
-                <p><u>{{ $setting->principal_name }}</u></p>
-                <p>NIP. {{ $setting->principal_nip }}</p>
-            </div>
+            <p class="signature-date">{{ $date }}</p>
+            <p class="signature-title">Kepala Sekolah,</p>
+            <table class="signature-table">
+                <tr>
+                    <td>
+                        <p class="principal-name"><u>{{ $setting->principal_name }}</u></p>
+                        <p class="principal-nip">NIP. {{ $setting->principal_nip }}</p>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="clear"></div>
     </div>

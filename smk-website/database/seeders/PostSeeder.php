@@ -67,7 +67,7 @@ class PostSeeder extends Seeder
                 'excerpt' => Str::limit(strip_tags($post['content']), 150),
                 'category' => $post['category'],
                 'featured_image' => 'images/posts/' . Str::slug($post['title']) . '.jpg',
-                'user_id' => $admin->id,
+                'author_id' => $admin->id,
                 'published_at' => $post['published_at'],
                 'is_featured' => $post['is_featured'],
                 'status' => 'published',

@@ -10,6 +10,7 @@ class LetterSetting extends Model
     use HasFactory;
 
     protected $fillable = [
+        'logo_path',
         'school_name',
         'school_address',
         'school_phone',
@@ -27,7 +28,8 @@ class LetterSetting extends Model
         'school_tagline',
         'school_website',
         'school_decree',
-        'letter_header_color'
+        'letter_header_color',
+        'header_text_color'
     ];
 
     protected $casts = [

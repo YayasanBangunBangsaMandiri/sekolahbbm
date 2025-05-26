@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -18,6 +19,7 @@ class Post extends Model
         'title',
         'content',
         'category', // news, events, achievements, sustainability
+        'category_id',
         'slug',
         'excerpt',
         'featured_image',
@@ -29,6 +31,7 @@ class Post extends Model
         'status', // draft, published
         'event_date', // for event posts
         'event_location', // for event posts
+        'type'
     ];
 
     /**
@@ -51,6 +54,14 @@ class Post extends Model
     }
 
     /**
+     * Get the category of the post.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
      * Get the associated tags for this post.
      */
     public function tags()
@@ -64,5 +75,24 @@ class Post extends Model
     public function media()
     {
         return $this->morphMany(Media::class, 'mediable');
+    }
+
+    /**
+     * Sync tags for this post.
+     * 
+     * @param array $tagNames Array of tag names
+     * @return void
+     */
+    public function syncTags(array $tagNames)
+    {
+        $tagIds = [];
+        foreach ($tagNames as $tagName) {
+            $tag = Tag::firstOrCreate([
+                'name' => ucwords($tagName),
+                'slug' => Str::slug($tagName)
+            ]);
+            $tagIds[] = $tag->id;
+        }
+        $this->tags()->sync($tagIds);
     }
 }

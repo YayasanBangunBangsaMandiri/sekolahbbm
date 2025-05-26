@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Major;
 use App\Models\Registration;
+use App\Models\LetterSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class RegistrationController extends Controller
 {
@@ -146,5 +148,42 @@ class RegistrationController extends Controller
         
         return redirect()->route('admin.registrations.show', $registration->id)
                         ->with('success', 'Status pendaftaran berhasil diperbarui.');
+    }
+
+    /**
+     * Download acceptance letter
+     */
+    public function downloadAcceptanceLetter(string $id)
+    {
+        $registration = Registration::with('major')->findOrFail($id);
+        
+        // Check if registration is accepted
+        if ($registration->status !== 'accepted') {
+            return back()->with('error', 'Surat penerimaan hanya tersedia untuk pendaftaran yang telah diterima.');
+        }
+
+        // Get letter settings
+        $setting = LetterSetting::first();
+        if (!$setting) {
+            return back()->with('error', 'Pengaturan surat belum dikonfigurasi. Silakan hubungi administrator.');
+        }
+
+        try {
+            // Generate PDF
+            $pdf = Pdf::loadView('pdf.acceptance-letter', [
+                'registration' => $registration,
+                'setting' => $setting,
+                'registrationNumber' => 'REG-' . str_pad($registration->id, 5, '0', STR_PAD_LEFT),
+                'date' => now()->isoFormat('D MMMM Y')
+            ]);
+
+            // Set paper size and orientation from settings
+            $pdf->setPaper($setting->paper_size ?? 'A4', $setting->paper_orientation ?? 'portrait');
+
+            // Download PDF
+            return $pdf->download('surat-penerimaan-' . $registration->student_name . '.pdf');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat mengunduh surat penerimaan. Silakan coba lagi.');
+        }
     }
 }

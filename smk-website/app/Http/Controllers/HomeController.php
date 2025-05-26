@@ -91,14 +91,22 @@ class HomeController extends Controller
         // Get school leadership and management team
         $leadership = Staff::where('type', 'leadership')
             ->orderBy('order')
+            ->orderBy('name')
+            ->get();
+            
+        // Get teachers
+        $teachers = Staff::where('type', 'teacher')
+            ->orderBy('order')
+            ->orderBy('name')
             ->get();
             
         // Get other staff members
         $staff = Staff::where('type', 'staff')
+            ->orderBy('order')
             ->orderBy('name')
             ->get();
             
-        return view('about', compact('page', 'leadership', 'staff'));
+        return view('about', compact('page', 'leadership', 'teachers', 'staff'));
     }
     
     /**
@@ -140,8 +148,9 @@ class HomeController extends Controller
             
             return back()->with('success', 'Your message has been sent. Thank you for contacting us.');
         } catch (\Exception $e) {
-            Log::error('Contact form error: ' . $e->getMessage());
-            return back()->withErrors(['error' => 'There was a problem sending your message. Please try again later.'])->withInput();
+            return back()
+                ->withInput()
+                ->withErrors(['error' => 'There was a problem sending your message. Please try again later.']);
         }
     }
 }

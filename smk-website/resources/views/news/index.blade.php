@@ -27,13 +27,18 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($posts as $post)
                 <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out hover:shadow-lg">
-                    @if($post->featured_image)
-                        <div class="aspect-w-16 aspect-h-9">
+                    <div class="aspect-w-16 aspect-h-9">
+                        @if($post->featured_image)
                             <img src="{{ asset('storage/' . $post->featured_image) }}" 
                                  alt="{{ $post->title }}" 
+                                 class="w-full h-48 object-cover"
+                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}';">
+                        @else
+                            <img src="{{ asset('images/no-image.jpg') }}" 
+                                 alt="No image available" 
                                  class="w-full h-48 object-cover">
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                     <div class="p-6">
                         <div class="flex items-center mb-2">
                             <span class="text-sm text-gray-500">

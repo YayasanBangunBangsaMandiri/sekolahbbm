@@ -155,17 +155,126 @@
     @if(isset($leadership) && $leadership->count() > 0)
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-12 text-center text-green-800">Our Leadership Team</h2>
+            <h2 class="text-3xl font-bold mb-12 text-center text-green-800">Tim Pimpinan</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($leadership as $leader)
-                <div class="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:scale-105">
-                    <img src="{{ asset($leader->photo ?? 'images/staff-placeholder.jpg') }}" alt="{{ $leader->name }}" class="w-full h-64 object-cover">
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                    <div class="aspect-w-4 aspect-h-3">
+                        @if($leader->photo_url)
+                            <img src="{{ Storage::url('staff-photos/' . $leader->photo_url) }}" 
+                                 alt="{{ $leader->name }}" 
+                                 class="w-full h-full object-cover">
+                        @else
+                            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                <svg class="w-20 h-20 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                        @endif
+                    </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-1">{{ $leader->name }}</h3>
-                        <p class="text-green-700 mb-3">{{ $leader->position }}</p>
-                        <p class="text-gray-600 mb-4">{{ Str::limit($leader->bio, 150) }}</p>
-                        <a href="{{ route('staff.show', $leader->id) }}" class="text-green-600 hover:text-green-800 font-medium">Read more →</a>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">{{ $leader->name }}</h3>
+                        <p class="text-green-700 mb-4 font-medium">{{ $leader->position }}</p>
+                        <div class="text-gray-600 mb-4 text-sm line-clamp-3">
+                            {{ $leader->bio }}
+                        </div>
+                        <a href="{{ route('staff.show', $leader->id) }}" 
+                           class="text-green-600 hover:text-green-800 font-medium inline-flex items-center">
+                            <span>Baca Selengkapnya</span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
+
+    <!-- Teachers -->
+    @if(isset($teachers) && $teachers->count() > 0)
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center text-green-800">Tim Pengajar</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                @foreach($teachers as $teacher)
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                    <div class="aspect-w-1 aspect-h-1">
+                        @if($teacher->photo_url)
+                            <img src="{{ Storage::url($teacher->photo_url) }}" 
+                                 alt="{{ $teacher->name }}" 
+                                 class="w-full h-full object-cover">
+                        @else
+                            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-900">{{ $teacher->name }}</h3>
+                        <p class="text-green-700 mb-3 font-medium">{{ $teacher->position }}</p>
+                        <div class="text-gray-600 mb-4 text-sm line-clamp-3">
+                            {{ $teacher->bio }}
+                        </div>
+                        <a href="{{ route('staff.show', $teacher->id) }}" 
+                           class="text-green-600 hover:text-green-800 font-medium inline-flex items-center">
+                            <span>Detail</span>
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
+
+    <!-- Staff -->
+    @if(isset($staff) && $staff->count() > 0)
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center text-green-800">Tim Staff</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                @foreach($staff as $member)
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                    <div class="aspect-w-1 aspect-h-1">
+                        @if($member->photo_url)
+                            <img src="{{ Storage::url($member->photo_url) }}" 
+                                 alt="{{ $member->name }}" 
+                                 class="w-full h-full object-cover">
+                        @else
+                            <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-900">{{ $member->name }}</h3>
+                        <p class="text-green-700 mb-3 font-medium">{{ $member->position }}</p>
+                        <div class="text-gray-600 mb-4 text-sm line-clamp-3">
+                            {{ $member->bio }}
+                        </div>
+                        <a href="{{ route('staff.show', $member->id) }}" 
+                           class="text-green-600 hover:text-green-800 font-medium inline-flex items-center">
+                            <span>Detail</span>
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
                     </div>
                 </div>
                 @endforeach

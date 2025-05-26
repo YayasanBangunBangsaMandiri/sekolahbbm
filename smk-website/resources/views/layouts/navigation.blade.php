@@ -85,7 +85,7 @@
                                 Admin Panel
                             </x-dropdown-link>
                             @endrole
-                            <x-dropdown-link :href="route('profile.edit')">
+                            <x-dropdown-link :href="route('admin.profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
                             <!-- Authentication -->
@@ -178,7 +178,7 @@
                     Admin Panel
                 </x-responsive-nav-link>
                 @endrole
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-responsive-nav-link :href="route('admin.profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
                 <!-- Authentication -->

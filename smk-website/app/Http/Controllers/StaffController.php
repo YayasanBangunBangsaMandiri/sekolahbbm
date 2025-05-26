@@ -2,16 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Staff;
 use Illuminate\Http\Request;
 
 class StaffController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the staff members.
      */
     public function index()
     {
-        //
+        $leadership = Staff::where('type', 'leadership')
+            ->orderBy('order')
+            ->orderBy('name')
+            ->get();
+            
+        $teachers = Staff::where('type', 'teacher')
+            ->orderBy('order')
+            ->orderBy('name')
+            ->get();
+            
+        $staff = Staff::where('type', 'staff')
+            ->orderBy('order')
+            ->orderBy('name')
+            ->get();
+            
+        return view('staff.index', compact('leadership', 'teachers', 'staff'));
     }
 
     /**
@@ -31,11 +47,11 @@ class StaffController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified staff member.
      */
-    public function show(string $id)
+    public function show(Staff $staff)
     {
-        //
+        return view('staff.show', compact('staff'));
     }
 
     /**

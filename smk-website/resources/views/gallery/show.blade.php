@@ -28,7 +28,10 @@
 
                 <div class="mb-8">
                     <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-lg">
-                        <img src="{{ asset('storage/' . $gallery->media_url) }}" alt="{{ $gallery->title }}" class="object-cover">
+                        <img src="{{ asset('storage/' . $gallery->media_url) }}" 
+                             alt="{{ $gallery->title }}" 
+                             class="object-cover"
+                             onerror="this.src='{{ asset('images/placeholder.jpg') }}';">
                     </div>
                 </div>
 
@@ -48,7 +51,10 @@
                 <div class="bg-white rounded-lg shadow-md overflow-hidden">
                     <a href="{{ route('gallery.show', $relatedGallery->id) }}" class="block hover:opacity-90 transition-opacity">
                         <div class="h-40 overflow-hidden">
-                            <img src="{{ asset('storage/' . $relatedGallery->media_url) }}" alt="{{ $relatedGallery->title }}" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/' . $relatedGallery->media_url) }}" 
+                                 alt="{{ $relatedGallery->title }}" 
+                                 class="w-full h-full object-cover"
+                                 onerror="this.src='{{ asset('images/placeholder.jpg') }}';">
                         </div>
                     </a>
                     <div class="p-4">

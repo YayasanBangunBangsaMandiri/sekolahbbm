@@ -10,13 +10,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MultiStepRegistrationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ApplicantDashboardController;
 use App\Http\Controllers\Admin\LetterSettingController;
+use App\Http\Controllers\Admin\RegistrationSettingController;
+use App\Http\Controllers\Admin\AdminProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'sendContact'])->name('contact.send');
+
+// Staff Detail Route
+Route::get('/staff/{staff}', [StaffController::class, 'show'])->name('staff.show');
 
 // Programs Routes
 Route::get('/programs', [ProgramController::class, 'index'])->name('programs');
@@ -59,10 +63,6 @@ Route::get('/news/{slug}', [PostController::class, 'show'])->name('news.show');
 Route::get('/category/{category}', [PostController::class, 'category'])->name('news.category');
 Route::get('/tag/{tag}', [PostController::class, 'tag'])->name('news.tag');
 
-// Staff Routes
-Route::get('/staff', [StaffController::class, 'index'])->name('staff');
-Route::get('/staff/{id}', [StaffController::class, 'show'])->name('staff.show');
-
 // Gallery Routes
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
 Route::get('/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.show');
@@ -71,14 +71,16 @@ Route::get('/gallery/{id}', [GalleryController::class, 'show'])->name('gallery.s
 Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
 
 // Multi-Step Registration Routes
-Route::get('/registration', [MultiStepRegistrationController::class, 'createStep1'])->name('registration');
-Route::get('/registration/step1', [MultiStepRegistrationController::class, 'createStep1'])->name('registration.step1');
-Route::post('/registration/step1', [MultiStepRegistrationController::class, 'storeStep1'])->name('registration.post.step1');
-Route::get('/registration/step2', [MultiStepRegistrationController::class, 'createStep2'])->name('registration.step2');
-Route::post('/registration/step2', [MultiStepRegistrationController::class, 'storeStep2'])->name('registration.post.step2');
-Route::get('/registration/step3', [MultiStepRegistrationController::class, 'createStep3'])->name('registration.step3');
-Route::post('/registration/step3', [MultiStepRegistrationController::class, 'storeStep3'])->name('registration.post.step3');
-Route::get('/registration/completed', [MultiStepRegistrationController::class, 'completed'])->name('registration.completed');
+Route::middleware(['registration.open'])->group(function () {
+    Route::get('/registration', [MultiStepRegistrationController::class, 'createStep1'])->name('registration');
+    Route::get('/registration/step1', [MultiStepRegistrationController::class, 'createStep1'])->name('registration.step1');
+    Route::post('/registration/step1', [MultiStepRegistrationController::class, 'storeStep1'])->name('registration.post.step1');
+    Route::get('/registration/step2', [MultiStepRegistrationController::class, 'createStep2'])->name('registration.step2');
+    Route::post('/registration/step2', [MultiStepRegistrationController::class, 'storeStep2'])->name('registration.post.step2');
+    Route::get('/registration/step3', [MultiStepRegistrationController::class, 'createStep3'])->name('registration.step3');
+    Route::post('/registration/step3', [MultiStepRegistrationController::class, 'storeStep3'])->name('registration.post.step3');
+    Route::get('/registration/completed', [MultiStepRegistrationController::class, 'completed'])->name('registration.completed');
+});
 
 // Applicant Dashboard Routes
 Route::get('/application', function() {
@@ -101,14 +103,28 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Redirect old profile routes to admin profile routes
+    Route::get('/profile', function() {
+        return redirect()->route('admin.profile.edit');
+    })->name('profile.edit');
+    
+    Route::patch('/profile', function() {
+        return redirect()->route('admin.profile.update');
+    })->name('profile.update');
+    
+    Route::delete('/profile', function() {
+        return redirect()->route('admin.profile.destroy');
+    })->name('profile.destroy');
 });
 
 // Admin Routes
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Profile Management
+    Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [AdminProfileController::class, 'destroy'])->name('profile.destroy');
     
     // Users Management (Admin only)
     Route::resource('users', UserController::class);
@@ -120,7 +136,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     // Content Management
     Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
     Route::resource('majors', \App\Http\Controllers\Admin\MajorController::class);
-    Route::resource('staff', StaffController::class)->except('show');
+    Route::resource('staff', \App\Http\Controllers\Admin\StaffController::class)->except('show');
     Route::resource('gallery', GalleryController::class)->except('show');
     Route::resource('programs', ProgramController::class)->except('show');
     Route::resource('projects', ProjectController::class)->except('show');
@@ -142,4 +158,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::get('registrations', [RegistrationController::class, 'index'])->name('registrations.index');
     Route::get('registrations/{registration}', [RegistrationController::class, 'show'])->name('registrations.show');
     Route::patch('registrations/{registration}/status', [RegistrationController::class, 'updateStatus'])->name('registrations.update-status');
+    Route::get('registrations/{registration}/download-letter', [RegistrationController::class, 'downloadAcceptanceLetter'])->name('registrations.download-letter');
+    
+    // Registration Settings
+    Route::get('/registration-settings', [RegistrationSettingController::class, 'edit'])->name('registration-settings.edit');
+    Route::put('/registration-settings', [RegistrationSettingController::class, 'update'])->name('registration-settings.update');
 });

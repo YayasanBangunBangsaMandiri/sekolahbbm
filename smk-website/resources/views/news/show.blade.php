@@ -33,7 +33,7 @@
     <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         @if($post->featured_image)
             <div class="mb-8 rounded-lg overflow-hidden">
-                <img src="{{ asset('storage/' . $post->featured_image) }}" 
+                <img src="{{ Storage::url('posts/' . $post->featured_image) }}" 
                      alt="{{ $post->title }}" 
                      class="w-full h-auto">
             </div>
@@ -67,7 +67,7 @@
                     <div class="bg-white rounded-lg shadow-md overflow-hidden">
                         @if($relatedPost->featured_image)
                             <div class="aspect-w-16 aspect-h-9">
-                                <img src="{{ asset('storage/' . $relatedPost->featured_image) }}" 
+                                <img src="{{ Storage::url('posts/' . $relatedPost->featured_image) }}" 
                                      alt="{{ $relatedPost->title }}" 
                                      class="w-full h-48 object-cover">
                             </div>
